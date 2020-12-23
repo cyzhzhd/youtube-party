@@ -31,6 +31,8 @@
 </template>
 
 <script>
+import { fetchPartyList } from '../api/index.js';
+
 export default {
   name: 'room-list',
   data() {
@@ -66,6 +68,12 @@ export default {
         },
       ],
     };
+  },
+
+  created() {
+    fetchPartyList().then((response) => {
+      console.log(response);
+    });
   },
 };
 </script>
