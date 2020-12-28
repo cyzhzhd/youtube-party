@@ -1,14 +1,21 @@
 import axios from 'axios';
 
-const config = {
-  baseUrl: 'http://3.35.79.27:3000',
-};
+// const config = {
+//   // baseUrl: 'https://www.utubeparty.com', 
+//   baseUrl: '/', 
+// };
 
 function fetchPartyList() {
-  return axios.get(`${config.baseUrl}/party`);
+  return axios.get(`/party`);
 }
 function createParty(options) {
-  return axios.post(`${config.baseUrl}/party/create`, options);
+  return axios.post(`/party/create`, options);
 }
+// function fetchPartyList() {
+//   return axios.get(`${config.baseUrl}/party`);
+// }
+// function createParty(options) {
+//   return axios.post(`${config.baseUrl}/party/create`, options);
+// }
 
 export { fetchPartyList, createParty };
