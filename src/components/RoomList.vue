@@ -2,11 +2,15 @@
   <div class="board">
     <ul class="roomlist-room">
       <div class="roomlist-room-wrapper create-room">
-        <img src="../assets/image/plus.png" />
+        <img src="../assets/image/plus.png" @click="createRoom" />
         <p>방 이름과 소개 메세지를 입력해주세요.</p>
         <div class="input wrapper">
-          <div class="input-room-name">이름: <input type="text" /></div>
-          <div class="input-room-intro">소개: <input type="text" /></div>
+          <div class="input-room-name">
+            이름: <input type="text" v-model.trim="name" />
+          </div>
+          <div class="input-room-intro">
+            소개: <input type="text" v-model.trim="desc" />
+          </div>
         </div>
       </div>
       <li v-for="room in roomlist" :key="room.id">
@@ -31,12 +35,14 @@
 </template>
 
 <script>
-import { fetchPartyList } from '../api/index.js';
+import { fetchPartyList, createParty } from '../api/index.js';
 
 export default {
   name: 'room-list',
   data() {
     return {
+      name: '',
+      desc: '',
       roomlist: [
         {
           name: 'room1',
@@ -75,6 +81,17 @@ export default {
       console.log(response);
     });
   },
+
+  methods: {
+    async createRoom() {
+      console.log(this.name, this.desc);
+      const options = {
+        name: this.name,
+        description: this.desc,
+      };
+      await createParty(options);
+    },
+  },
 };
 </script>
 
@@ -106,6 +123,7 @@ a:hover {
   width: 320px;
 }
 .create-room img {
+  cursor: pointer;
   width: 50px;
 }
 .roomlist-details-wrapper {
