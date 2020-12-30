@@ -2,7 +2,7 @@ import axios from 'axios';
 
 let baseUrl = '/';
 if (process.env.VUE_APP_MODE === 'develop') {
-  baseUrl = 'https://www.utubeparty.com/';
+  baseUrl = '/api/';
 }
 
 const config = {

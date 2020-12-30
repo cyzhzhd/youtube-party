@@ -4,4 +4,18 @@ if (process.env.VUE_APP_MODE !== 'develop') {
     publicPath: '/public/',
     outputDir: '../youtube-party-server/public',
   };
+} else {
+  module.exports = {
+    devServer: {
+      proxy: {
+        '/api': {
+          target: 'https://www.utubeparty.com/',
+          changeOrigin: true,
+          pathRewrite: {
+            '^/api': '',
+          },
+        },
+      },
+    },
+  };
 }
