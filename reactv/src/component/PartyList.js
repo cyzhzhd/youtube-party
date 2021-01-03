@@ -11,7 +11,7 @@ function DisplayPartyList(props) {
 
   props.partyList.forEach((val) => {
     partyList.push(
-      <div key={val.id} className='partyList-party'>
+      <div key={val._id} className='partyList-party'>
         <div className='partyList-cover-image'>
           <img alt='coverImage' src={coverImage} />
         </div>
@@ -19,9 +19,9 @@ function DisplayPartyList(props) {
           <div className='partyList-detail'>
             <div>{val.name}</div>
             <div>{val.host}</div>
-            <div>{val.numMembers}</div>
+            <div>{val.userList.length}</div>
           </div>
-          <div className='partyList-intro'>{val.intro}</div>
+          <div className='partyList-intro'>{val.description}</div>
         </div>
       </div>
     );
@@ -34,44 +34,53 @@ export default function PartyList() {
   const [partyList, setpartyList] = useState([
     {
       name: 'room1',
-      id: '12345',
+      _id: '12345',
       host: 'ehyun',
-      numMembers: 0,
-      intro: '아무거나 다봐',
+      userList: [],
+      description: '아무거나 다봐',
     },
     {
       name: 'room2',
-      id: '12346',
+      _id: '12346',
       host: 'ekwon',
-      numMembers: 0,
-      intro: '유행 지난 드라마 보는 방',
+      userList: [],
+      description: '유행 지난 드라마 보는 방',
     },
     {
       name: 'room3',
-      id: '12347',
+      _id: '12347',
       host: 'kwon',
-      numMembers: 0,
-      intro: '인기 드라마 몰아보기',
+      userList: [],
+      description: '인기 드라마 몰아보기',
     },
     {
       name: 'room3',
-      id: '12348',
+      _id: '12348',
       host: 'kwon',
-      numMembers: 0,
-      intro: '가수 ㅇㅇㅇ 방송 몰아보기',
+      userList: [],
+      description: '가수 ㅇㅇㅇ 방송 몰아보기',
     },
   ]);
-  const [partyName, partyNameInput] = useInput({ type: 'text' });
-  const [partyDesc, partyDescInput] = useInput({ type: 'text' });
+  const [isPartyListUpToDate, setIsPartyListUpToDate] = useState(true);
+  const [partyName, setPartyName, partyNameInput] = useInput({ type: 'text' });
+  const [partyDesc, setPartyDesc, partyDescInput] = useInput({ type: 'text' });
 
-  // useEffect(() => {
-  //   fetchPartyList().then((response) => {
-  //     console.log(response);
-  //   });
-  // }, [partyList]);
+  useEffect(() => {
+    fetchPartyList().then(({ data }) => {
+      setpartyList(data);
+      setIsPartyListUpToDate(true);
+      console.log(data);
+    });
+  }, [isPartyListUpToDate]);
 
-  function createRoom() {
-    console.log(partyName, partyDesc);
+  async function createRoom() {
+    const options = {
+      name: partyName,
+      description: partyDesc,
+    };
+    await createParty(options);
+    setPartyName('');
+    setPartyDesc('');
   }
 
   return (

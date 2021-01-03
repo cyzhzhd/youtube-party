@@ -10,5 +10,5 @@ export default function useInput({ type }) {
     />
   );
 
-  return [value, input];
+  return [value, setValue, input];
 }
