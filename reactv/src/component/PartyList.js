@@ -18,7 +18,7 @@ function DisplayPartyList(props) {
         <div className='partyList-details-wrapper'>
           <div className='partyList-detail'>
             <div>{val.name}</div>
-            <div>{val.host}</div>
+            <div>{val.hostId}</div>
             <div>{val.userList.length}</div>
           </div>
           <div className='partyList-intro'>{val.description}</div>
@@ -30,7 +30,7 @@ function DisplayPartyList(props) {
   return <>{partyList}</>;
 }
 
-export default function PartyList() {
+export default function PartyList(props) {
   const [partyList, setpartyList] = useState([
     {
       name: 'room1',
@@ -61,24 +61,24 @@ export default function PartyList() {
       description: '가수 ㅇㅇㅇ 방송 몰아보기',
     },
   ]);
-  const [isPartyListUpToDate, setIsPartyListUpToDate] = useState(true);
   const [partyName, setPartyName, partyNameInput] = useInput({ type: 'text' });
   const [partyDesc, setPartyDesc, partyDescInput] = useInput({ type: 'text' });
 
   useEffect(() => {
     fetchPartyList().then(({ data }) => {
       setpartyList(data);
-      setIsPartyListUpToDate(true);
       console.log(data);
     });
-  }, [isPartyListUpToDate]);
+  }, [props.socketUpdateFlag]);
 
   async function createRoom() {
     const options = {
       name: partyName,
       description: partyDesc,
+      hostId: props.sessionId,
     };
-    await createParty(options);
+    const newParty = await createParty(options);
+    console.log(newParty);
     setPartyName('');
     setPartyDesc('');
   }
