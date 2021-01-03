@@ -1,7 +1,7 @@
 import React from 'react';
-import './assets/css/App.css';
-import FrindList from './component/FriendList';
-import PartyList from './component/PartyList';
+import { Route, Switch } from 'react-router-dom';
+import Main from './view/Main';
+import PartyRoom from './view/PartyRoom';
 import useSocketIO from './hook/useSocketIO';
 
 function App() {
@@ -9,8 +9,18 @@ function App() {
 
   return (
     <div className='App'>
-      <FrindList friendList={friendList} />
-      <PartyList socketUpdateFlag={socketUpdateFlag} sessionId={sessionId} />
+      <Switch>
+        <Route path='/partyRoom/:id/:name'>
+          <PartyRoom />
+        </Route>
+        <Route path='/'>
+          <Main
+            friendList={friendList}
+            socketUpdateFlag={socketUpdateFlag}
+            sessionId={sessionId}
+          ></Main>
+        </Route>
+      </Switch>
     </div>
   );
 }

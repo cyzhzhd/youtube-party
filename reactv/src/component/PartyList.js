@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../assets/css/PartyList.css';
 import { fetchPartyList, createParty } from '../api/index.js';
 import plusImage from '../assets/images/plus.png';
@@ -8,17 +9,19 @@ import useInput from '../hook/useInput';
 function DisplayPartyList(props) {
   const partyList = props.partyList.map((val) => (
     <div key={val._id} className='partyList-party'>
-      <div className='partyList-cover-image'>
-        <img alt='coverImage' src={coverImage} />
-      </div>
-      <div className='partyList-details-wrapper'>
-        <div className='partyList-detail'>
-          <div>{val.name}</div>
-          <div>{val.hostId}</div>
-          <div>{val.userList.length}</div>
+      <Link to={`/partyRoom/${val._id}/${val.name}`}>
+        <div className='partyList-cover-image'>
+          <img alt='coverImage' src={coverImage} />
         </div>
-        <div className='partyList-intro'>{val.description}</div>
-      </div>
+        <div className='partyList-details-wrapper'>
+          <div className='partyList-detail'>
+            <div>{val.name}</div>
+            <div>{val.hostId}</div>
+            <div>{val.userList.length}</div>
+          </div>
+          <div className='partyList-intro'>{val.description}</div>
+        </div>
+      </Link>
     </div>
   ));
 
@@ -33,27 +36,6 @@ export default function PartyList(props) {
       host: 'ehyun',
       userList: [],
       description: '아무거나 다봐',
-    },
-    {
-      name: 'room2',
-      _id: '12346',
-      host: 'ekwon',
-      userList: [],
-      description: '유행 지난 드라마 보는 방',
-    },
-    {
-      name: 'room3',
-      _id: '12347',
-      host: 'kwon',
-      userList: [],
-      description: '인기 드라마 몰아보기',
-    },
-    {
-      name: 'room3',
-      _id: '12348',
-      host: 'kwon',
-      userList: [],
-      description: '가수 ㅇㅇㅇ 방송 몰아보기',
     },
   ]);
   const [partyName, setPartyName, partyNameInput] = useInput({ type: 'text' });
