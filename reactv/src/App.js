@@ -7,7 +7,6 @@ import useSocketIO from './hook/useSocketIO';
 function App() {
   const { sessionId, friendList, socketUpdateFlag } = useSocketIO();
 
-  console.log(sessionId);
   return (
     <div className='App'>
       <FrindList friendList={friendList} />

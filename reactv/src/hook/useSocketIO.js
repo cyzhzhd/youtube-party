@@ -4,7 +4,6 @@ import { io } from 'socket.io-client';
 const url = 'https://www.utubeparty.com';
 
 export default function useSocketIO() {
-  console.log('useSocketIO');
   const [sessionId, setSessionId] = useState('');
   const [partyRoom, setPartyRoom] = useState('');
   const [friendList, setFriendList] = useState([]);
@@ -18,7 +17,6 @@ export default function useSocketIO() {
 
     socket.on('sessionId', (data) => {
       setSessionId(data);
-
       socket.emit('join', 'main');
     });
 

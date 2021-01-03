@@ -1,31 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import '../assets/css/PartyList.css';
 import { fetchPartyList, createParty } from '../api/index.js';
-// image는 항상 이렇게 임포트 해야하는지? vue에서는 src="../assets/plus.png"로 했음.
 import plusImage from '../assets/images/plus.png';
 import coverImage from '../assets/images/cover.png';
 import useInput from '../hook/useInput';
 
 function DisplayPartyList(props) {
-  const partyList = [];
-
-  props.partyList.forEach((val) => {
-    partyList.push(
-      <div key={val._id} className='partyList-party'>
-        <div className='partyList-cover-image'>
-          <img alt='coverImage' src={coverImage} />
-        </div>
-        <div className='partyList-details-wrapper'>
-          <div className='partyList-detail'>
-            <div>{val.name}</div>
-            <div>{val.hostId}</div>
-            <div>{val.userList.length}</div>
-          </div>
-          <div className='partyList-intro'>{val.description}</div>
-        </div>
+  const partyList = props.partyList.map((val) => (
+    <div key={val._id} className='partyList-party'>
+      <div className='partyList-cover-image'>
+        <img alt='coverImage' src={coverImage} />
       </div>
-    );
-  });
+      <div className='partyList-details-wrapper'>
+        <div className='partyList-detail'>
+          <div>{val.name}</div>
+          <div>{val.hostId}</div>
+          <div>{val.userList.length}</div>
+        </div>
+        <div className='partyList-intro'>{val.description}</div>
+      </div>
+    </div>
+  ));
 
   return <>{partyList}</>;
 }
@@ -65,10 +60,14 @@ export default function PartyList(props) {
   const [partyDesc, setPartyDesc, partyDescInput] = useInput({ type: 'text' });
 
   useEffect(() => {
-    fetchPartyList().then(({ data }) => {
-      setpartyList(data);
-      console.log(data);
-    });
+    fetchPartyList()
+      .then(({ data }) => {
+        setpartyList(data);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, [props.socketUpdateFlag]);
 
   async function createRoom() {
@@ -84,7 +83,7 @@ export default function PartyList(props) {
   }
 
   return (
-    <ul>
+    <ul className='party-list'>
       <li className='partyList-parties-wrapper'>
         <div className='partyList-party create-room'>
           <img src={plusImage} alt='create' onClick={createRoom} />
