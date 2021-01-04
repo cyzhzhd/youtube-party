@@ -12,4 +12,8 @@ function fetchPartyList() {
 function createParty(options) {
   return axios.post(`${config.baseUrl}/party/create`, options);
 }
-export { fetchPartyList, createParty };
+
+async function fetchYoutubeThumnail(id) {
+  return await axios.get(`https://img.youtube.com/vi/${id}/default.jpg`);
+}
+export { fetchPartyList, createParty, fetchYoutubeThumnail };

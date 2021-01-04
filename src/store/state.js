@@ -1,5 +1,5 @@
 import { atom, selector } from 'recoil';
-import { fetchPartyList } from '../api';
+import { fetchPartyList, fetchYoutubeThumnail } from '../api';
 
 export const sessionId = atom({
   key: 'sessionId',
@@ -9,6 +9,25 @@ export const sessionId = atom({
 export const partyRoomId = atom({
   key: 'partyRoomId',
   default: null,
+});
+
+export const videoList = atom({
+  key: 'videoList',
+  default: [],
+});
+
+export const videoListThumbnail = selector({
+  key: 'videoListThumbnail',
+  get: async ({ get }) => {
+    const list = get(videoList);
+    return list.map((val) => {
+      return (
+        <li key={val}>
+          <img src={fetchYoutubeThumnail(val)} alt='error' />
+        </li>
+      );
+    });
+  },
 });
 
 export const partyList = selector({

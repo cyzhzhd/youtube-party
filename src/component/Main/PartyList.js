@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilValueLoadable } from 'recoil';
-import '../assets/css/PartyList.css';
+import '../../assets/css/PartyList.css';
 import CeateParty from './CreateParty';
-import coverImage from '../assets/images/cover.png';
-import { partyList } from '../store/state';
+import coverImage from '../../assets/images/cover.png';
+import { partyList } from '../../store/state';
 
 function DisplayPartyList(list) {
   const partyList = list.map((val) => (

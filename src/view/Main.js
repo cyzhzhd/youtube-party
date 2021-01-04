@@ -1,7 +1,7 @@
 import React from 'react';
 import '../assets/css/Main.css';
-import FrindList from '../component/FriendList';
-import PartyList from '../component/PartyList';
+import FrindList from '../component/Main/FriendList';
+import PartyList from '../component/Main/PartyList';
 
 function Main(props) {
   return (
