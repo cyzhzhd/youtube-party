@@ -1,37 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { io } from 'socket.io-client';
+import { sessionId, partyRoomId } from '../store/state';
 
 const url = 'https://www.utubeparty.com';
+const socket = io(url, {
+  reconnectionDelay: 10000,
+  transports: ['websocket'],
+}).connect();
 
 export default function useSocketIO() {
-  const [sessionId, setSessionId] = useState('');
-  const [partyRoom, setPartyRoom] = useState('');
-  const [friendList, setFriendList] = useState([]);
-  const [socketUpdateFlag, setSocketUpdateFlag] = useState(true);
+  const roomId = useRecoilValue(partyRoomId);
+  const setSessionId = useSetRecoilState(sessionId);
 
   useEffect(() => {
-    const socket = io(url, {
-      reconnectionDelay: 10000,
-      transports: ['websocket'],
-    }).connect();
-
+    if (!roomId) return;
     socket.on('sessionId', (data) => {
       setSessionId(data);
       socket.emit('join', 'main');
     });
-
-    socket.on('party-list-updated', () => {
-      setSocketUpdateFlag(!socketUpdateFlag);
-    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  return {
-    sessionId,
-    partyRoom,
-    setPartyRoom,
-    friendList,
-    setFriendList,
-    socketUpdateFlag,
-  };
+  }, [roomId]);
 }

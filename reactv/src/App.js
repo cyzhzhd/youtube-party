@@ -5,7 +5,7 @@ import PartyRoom from './view/PartyRoom';
 import useSocketIO from './hook/useSocketIO';
 
 function App() {
-  const { sessionId, friendList, socketUpdateFlag } = useSocketIO();
+  useSocketIO();
 
   return (
     <div className='App'>
@@ -14,11 +14,7 @@ function App() {
           <PartyRoom />
         </Route>
         <Route path='/'>
-          <Main
-            friendList={friendList}
-            socketUpdateFlag={socketUpdateFlag}
-            sessionId={sessionId}
-          ></Main>
+          <Main></Main>
         </Route>
       </Switch>
     </div>

@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { useRecoilValueLoadable } from 'recoil';
 import '../assets/css/PartyList.css';
-import { fetchPartyList, createParty } from '../api/index.js';
-import plusImage from '../assets/images/plus.png';
+import CeateParty from './CreateParty';
 import coverImage from '../assets/images/cover.png';
-import useInput from '../hook/useInput';
+import { partyList } from '../store/state';
 
-function DisplayPartyList(props) {
-  const partyList = props.partyList.map((val) => (
+function DisplayPartyList(list) {
+  const partyList = list.map((val) => (
     <div key={val._id} className='partyList-party'>
       <Link to={`/partyRoom/${val._id}/${val.name}`}>
         <div className='partyList-cover-image'>
@@ -25,57 +25,29 @@ function DisplayPartyList(props) {
     </div>
   ));
 
-  return <>{partyList}</>;
+  return partyList;
 }
 
-export default function PartyList(props) {
-  const [partyList, setpartyList] = useState([
-    {
-      name: 'room1',
-      _id: '12345',
-      host: 'ehyun',
-      userList: [],
-      description: '아무거나 다봐',
-    },
-  ]);
-  const [partyName, setPartyName, partyNameInput] = useInput({ type: 'text' });
-  const [partyDesc, setPartyDesc, partyDescInput] = useInput({ type: 'text' });
+export default function PartyList() {
+  const partyListLoadable = useRecoilValueLoadable(partyList);
 
-  useEffect(() => {
-    fetchPartyList()
-      .then(({ data }) => {
-        setpartyList(data);
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [props.socketUpdateFlag]);
-
-  async function createRoom() {
-    const options = {
-      name: partyName,
-      description: partyDesc,
-      hostId: props.sessionId,
-    };
-    const newParty = await createParty(options);
-    console.log(newParty);
-    setPartyName('');
-    setPartyDesc('');
+  let content = null;
+  switch (partyListLoadable.state) {
+    case 'hasValue':
+      content = DisplayPartyList(partyListLoadable.contents);
+      break;
+    case 'hasError':
+      content = '데이터를 불러오는 중 에러 발생';
+      break;
+    default:
+      content = '...';
   }
 
   return (
     <ul className='party-list'>
       <li className='partyList-parties-wrapper'>
-        <div className='partyList-party create-room'>
-          <img src={plusImage} alt='create' onClick={createRoom} />
-          <p>방 이름과 소개 메세지를 입력해주세요.</p>
-          <div>
-            <div>이름: {partyNameInput}</div>
-            <div>소개: {partyDescInput}</div>
-          </div>
-        </div>
-        <DisplayPartyList partyList={partyList} />
+        <CeateParty />
+        {content}
       </li>
     </ul>
   );
