@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { useSetRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { io } from 'socket.io-client';
-import { sessionId, partyRoomId } from '../store/state';
+import { sessionId, partyRoomId, socketQueue, messages } from '../store/state';
 
 const url = 'https://www.utubeparty.com';
 const socket = io(url, {
@@ -11,14 +11,45 @@ const socket = io(url, {
 
 export default function useSocketIO() {
   const roomId = useRecoilValue(partyRoomId);
-  const setSessionId = useSetRecoilState(sessionId);
+  const setUid = useSetRecoilState(sessionId);
+  const [queue, setQueue] = useRecoilState(socketQueue);
+  const [msgs, setMsgs] = useRecoilState(messages);
+
+  useEffect(() => {
+    socket.on('sessionId', (data) => {
+      setUid(data);
+    });
+  }, [setUid]);
+
+  useEffect(() => {
+    socket.on('deliverChat', (data) => {
+      console.log(data);
+      setMsgs([...msgs, { uid: data.uid, content: data.content }]);
+    });
+  }, [msgs, setMsgs]);
+
+  useEffect(() => {
+    if (queue.length < 1) return;
+
+    const action = queue[0];
+    switch (action.type) {
+      case 'sendMsg':
+        socket.emit('sendMsg', {
+          uid: action.uid,
+          content: action.content,
+          roomId,
+        });
+        break;
+      default:
+        console.log('default', action);
+    }
+
+    setQueue(queue.slice(1));
+  }, [queue, roomId, setQueue]);
 
   useEffect(() => {
     if (!roomId) return;
-    socket.on('sessionId', (data) => {
-      setSessionId(data);
-      socket.emit('join', 'main');
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    socket.emit('join', roomId);
   }, [roomId]);
 }

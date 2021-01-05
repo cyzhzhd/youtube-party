@@ -1,5 +1,6 @@
 import { atom, selector } from 'recoil';
-import { fetchPartyList, fetchYoutubeThumnail } from '../api';
+import { fetchPartyList } from '../api';
+import Youtube from 'react-youtube';
 
 export const sessionId = atom({
   key: 'sessionId',
@@ -16,17 +17,55 @@ export const videoList = atom({
   default: [],
 });
 
+export const message = atom({
+  key: 'message',
+  default: '',
+});
+
+export const messages = atom({
+  key: 'messagees',
+  default: [],
+});
+
+export const socketQueue = atom({
+  key: 'socketQueue',
+  default: [],
+});
+
 export const videoListThumbnail = selector({
   key: 'videoListThumbnail',
-  get: async ({ get }) => {
+  get: ({ get }) => {
     const list = get(videoList);
     return list.map((val) => {
       return (
         <li key={val}>
-          <img src={fetchYoutubeThumnail(val)} alt='error' />
+          <Youtube
+            videoId={val}
+            opts={{
+              height: '180',
+              width: '240',
+            }}
+          />
         </li>
       );
     });
+  },
+});
+
+export const currentVideo = selector({
+  key: 'currentVideo',
+  get: ({ get }) => {
+    const list = get(videoList);
+    const val = list[0];
+    return (
+      <Youtube
+        videoId={val}
+        opts={{
+          height: '480',
+          width: '720',
+        }}
+      />
+    );
   },
 });
 

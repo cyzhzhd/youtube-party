@@ -1,22 +1,15 @@
 import React from 'react';
-import { useRecoilValueLoadable } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { videoListThumbnail } from '../../store/state';
+import AddVideo from './AddVideo';
 
 export default function VideoList() {
-  const videoListLoadable = useRecoilValueLoadable(videoListThumbnail);
+  const videoList = useRecoilValue(videoListThumbnail);
 
-  let content = null;
-  switch (videoListLoadable.state) {
-    case 'hasValue':
-      content = videoListLoadable.contents;
-      break;
-    case 'hasError':
-      content = '데이터를 불러오는 중 에러 발생';
-      break;
-    default:
-      content = '...';
-  }
-  console.log(content);
-
-  return <ul>{content}</ul>;
+  return (
+    <div className='party-room-play-list'>
+      <ul className='party-room-video-list'>{videoList}</ul>
+      <AddVideo />
+    </div>
+  );
 }
