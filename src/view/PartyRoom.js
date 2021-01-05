@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
 import '../assets/css/PartyRoom.css';
-import Videolist from '../component/PartyRoom/VideoList';
-import MainVideo from '../component/PartyRoom/MainVideo';
-import Chat from '../component/PartyRoom/Chat';
+import Videolist from '../component/partyRoom/VideoList';
+import MainVideo from '../component/partyRoom/MainVideo';
+import Chat from '../component/partyRoom/Chat';
 import { useSetRecoilState } from 'recoil';
 import { partyRoomId } from '../store/state';
 

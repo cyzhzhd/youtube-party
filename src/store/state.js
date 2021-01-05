@@ -32,6 +32,16 @@ export const socketQueue = atom({
   default: [],
 });
 
+export const currentVideoTime = atom({
+  key: 'currentVideoTime',
+  default: 0,
+});
+
+export const isTimeUpToDate = atom({
+  key: 'isTimeUpToDate',
+  default: true,
+});
+
 export const videoListThumbnail = selector({
   key: 'videoListThumbnail',
   get: ({ get }) => {
@@ -56,16 +66,7 @@ export const currentVideo = selector({
   key: 'currentVideo',
   get: ({ get }) => {
     const list = get(videoList);
-    const val = list[0];
-    return (
-      <Youtube
-        videoId={val}
-        opts={{
-          height: '480',
-          width: '720',
-        }}
-      />
-    );
+    return list[0];
   },
 });
 

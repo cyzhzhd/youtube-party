@@ -2,17 +2,20 @@ import React from 'react';
 import useInput from '../../hook/useInput';
 import { createParty } from '../../api/index.js';
 import plusImage from '../../assets/images/plus.png';
+import { useRecoilValue } from 'recoil';
+import { sessionId } from '../../store/state';
 
 export default function CreateParty() {
   const [partyName, partyNameInput, setPartyName] = useInput({ type: 'text' });
   const [partyDesc, partyDescInput, setPartyDesc] = useInput({ type: 'text' });
+  const uId = useRecoilValue(sessionId);
 
-  async function createRoom(props) {
+  async function createRoom() {
     try {
       const options = {
         name: partyName,
         description: partyDesc,
-        hostId: props.sessionId,
+        hostId: uId,
       };
       const newParty = await createParty(options);
       console.log(newParty);

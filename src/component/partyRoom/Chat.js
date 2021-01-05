@@ -5,7 +5,6 @@ import { message, messages, sessionId, socketQueue } from '../../store/state';
 
 function ChatMessages() {
   const msgs = useRecoilValue(messages);
-  console.log('msgs', msgs);
 
   const msgList = msgs.map((val, idx) => {
     return (

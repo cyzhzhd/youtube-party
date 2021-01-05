@@ -13,7 +13,8 @@ function createParty(options) {
   return axios.post(`${config.baseUrl}/party/create`, options);
 }
 
-async function fetchYoutubeThumnail(id) {
-  return await axios.get(`https://img.youtube.com/vi/${id}/0.jpg`);
+function addVideoList(options) {
+  return axios.post(`${config.baseUrl}/party/addVideo`, options);
 }
-export { fetchPartyList, createParty, fetchYoutubeThumnail };
+
+export { fetchPartyList, createParty, addVideoList };

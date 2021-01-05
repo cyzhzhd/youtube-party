@@ -1,20 +1,22 @@
 import React from 'react';
 import Youtube from 'react-youtube';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import useInput from '../../hook/useInput';
-import { videoList } from '../../store/state';
+import { sessionId, socketQueue, videoList } from '../../store/state';
 
 export default function AddVideo() {
   const [url, urlInput, setUrl] = useInput({ type: 'text' });
   const [list, setList] = useRecoilState(videoList);
-  const id = urlParser(url);
+  const [queue, setQueue] = useRecoilState(socketQueue);
+  const uId = useRecoilValue(sessionId);
+  const videoId = urlParser(url);
   let content;
-  if (id === 'error') {
+  if (videoId === 'error') {
     content = '';
   } else {
     content = (
       <Youtube
-        videoId={id}
+        videoId={videoId}
         opts={{
           height: '180',
           width: '240',
@@ -23,8 +25,17 @@ export default function AddVideo() {
     );
   }
 
-  function addVideoOnList() {
-    setList([...list, id]);
+  async function addVideoOnList() {
+    if (videoId === 'error') return;
+    // setList([...list, videoId]);
+    setQueue([
+      ...queue,
+      {
+        type: 'updateVideoList',
+        videoId,
+        uId,
+      },
+    ]);
     setUrl('');
   }
   return (
