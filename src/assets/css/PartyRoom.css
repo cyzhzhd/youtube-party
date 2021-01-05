@@ -1,0 +1,47 @@
+.party-room {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  grid-template-rows: 50px 1fr 200px;
+  grid-template-areas: 
+  'menuBar menuBar'
+  'mainVideo chat'
+  'playList playList';
+  width: 100%;
+  height: 100%;
+}
+.party-room-menu-bar {
+  border: 1px red solid;
+  grid-area: menuBar;
+}
+.party-room-main-video {
+  border: 1px blue solid;
+  grid-area: mainVideo;
+}
+
+.party-room-chat {
+  border: 1px yellow solid;
+  grid-area: chat;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  height: calc(1fr - 350px);
+  justify-content: space-between;
+  /* height: 400px; */
+}
+.party-room-play-list {
+  border: 1px green solid;
+  grid-area: playList;
+  display: grid;
+  grid-template-areas: 'videoList addList';
+  grid-template-columns: 1fr 300px;
+}
+.party-room-video-list{
+  grid-area: videoList;
+  display: flex;
+}
+
+.party-room-add-video{
+  grid-area: addList;
+  display: flex;
+  flex-direction: column;
+}

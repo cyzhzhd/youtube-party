@@ -1,9 +1,9 @@
 import React from 'react';
 import '../assets/css/Main.css';
-import FrindList from '../component/FriendList';
-import PartyList from '../component/PartyList';
+import FrindList from '../component/main/FriendList';
+import PartyList from '../component/main/PartyList';
 
-function Main(props) {
+function Main() {
   return (
     <div className='Main'>
       <PartyList />
