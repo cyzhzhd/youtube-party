@@ -9,9 +9,10 @@ import {
   videoList,
   currentVideoTime,
   isTimeUpToDate,
+  currentVideoId,
 } from '../store/state';
 
-const url = 'https://www.utubeparty.com';
+const url = process.env.REACT_APP_API_HOST;
 const socket = io(url, {
   reconnectionDelay: 10000,
   transports: ['websocket'],
@@ -25,15 +26,26 @@ export default function SocketIO() {
   const [queue, setQueue] = useRecoilState(socketQueue);
   const [msgs, setMsgs] = useRecoilState(messages);
   const setIsUpToDate = useSetRecoilState(isTimeUpToDate);
+  const [curVideoId, setCurVideoId] = useRecoilState(currentVideoId);
 
   useEffect(() => {
     console.log('deliverVideoTime');
     socket.on('deliverVideoTime', (data) => {
       console.log('deliverVideoTime', data);
+      if (data.videoId !== curVideoId) {
+        setCurVideoId(data.videoId);
+      }
       setTime(data.time);
       setIsUpToDate(false);
     });
-  }, [setIsUpToDate, setTime]);
+  }, [curVideoId, setCurVideoId, setIsUpToDate, setTime]);
+
+  useEffect(() => {
+    socket.on('deliverVideoId', (data) => {
+      console.log('deliverVideoId', data);
+      setCurVideoId(data.videoId);
+    });
+  });
 
   // once user joined the website
   useEffect(() => {
@@ -82,16 +94,24 @@ export default function SocketIO() {
       case 'updateVideoList':
         socket.emit('updateVideoList', {
           uid,
+          add: action.add,
           partyId,
           videoId: action.videoId,
         });
         break;
-      case 'syncVideo':
-        socket.emit('syncVideo', {
+      case 'syncVideoTime':
+        socket.emit('syncVideoTime', {
           uid,
           partyId,
           videoId: action.videoId,
           time: action.time,
+        });
+        break;
+      case 'syncVideoId':
+        socket.emit('syncVideoId', {
+          uid,
+          partyId,
+          videoId: action.videoId,
         });
         break;
       default:

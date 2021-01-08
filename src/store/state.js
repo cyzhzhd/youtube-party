@@ -1,6 +1,5 @@
 import { atom, selector } from 'recoil';
 import { fetchPartyList } from '../api';
-import Youtube from 'react-youtube';
 
 export const sessionId = atom({
   key: 'sessionId',
@@ -10,11 +9,6 @@ export const sessionId = atom({
 export const partyRoomId = atom({
   key: 'partyRoomId',
   default: null,
-});
-
-export const videoList = atom({
-  key: 'videoList',
-  default: [],
 });
 
 export const message = atom({
@@ -32,6 +26,30 @@ export const socketQueue = atom({
   default: [],
 });
 
+export const videoList = atom({
+  key: 'videoList',
+  default: [],
+});
+
+export const currentVideoId = atom({
+  key: 'currentVideoId',
+  default: null,
+});
+
+export const currentVideo = selector({
+  key: 'currentVideo',
+  get: ({ get }) => {
+    const list = get(videoList);
+    const id = get(currentVideoId);
+    const curVideo = list.find((element) => element === id);
+    if (curVideo) {
+      return curVideo;
+    }
+
+    return list[0];
+  },
+});
+
 export const currentVideoTime = atom({
   key: 'currentVideoTime',
   default: 0,
@@ -42,33 +60,25 @@ export const isTimeUpToDate = atom({
   default: true,
 });
 
-export const videoListThumbnail = selector({
-  key: 'videoListThumbnail',
-  get: ({ get }) => {
-    const list = get(videoList);
-    return list.map((val) => {
-      return (
-        <li key={val}>
-          <Youtube
-            videoId={val}
-            opts={{
-              height: '180',
-              width: '240',
-            }}
-          />
-        </li>
-      );
-    });
-  },
-});
-
-export const currentVideo = selector({
-  key: 'currentVideo',
-  get: ({ get }) => {
-    const list = get(videoList);
-    return list[0];
-  },
-});
+// export const videoListThumbnail = selector({
+//   key: 'videoListThumbnail',
+//   get: ({ get }) => {
+//     const list = get(videoList);
+//     return list.map((val) => {
+//       return (
+//         <li key={val}>
+//           <Youtube
+//             videoId={val}
+//             opts={{
+//               height: '180',
+//               width: '240',
+//             }}
+//           />
+//         </li>
+//       );
+//     });
+//   },
+// });
 
 export const partyList = selector({
   key: 'partyList',

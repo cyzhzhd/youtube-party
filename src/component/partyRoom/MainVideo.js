@@ -28,7 +28,7 @@ export default function MainVideo() {
         setQueue([
           ...queue,
           {
-            type: 'syncVideo',
+            type: 'syncVideoTime',
             partyId,
             videoId,
             time: player.getCurrentTime(),
@@ -54,13 +54,13 @@ export default function MainVideo() {
 
   return (
     <div className='party-room-main-video'>
-      (
       <Youtube
         videoId={videoId}
         onReady={onReady}
         opts={{
           height: '480',
           width: '720',
+          playerVars: { autoplay: 1 },
         }}
       />
       )
