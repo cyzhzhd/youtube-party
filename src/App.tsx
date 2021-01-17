@@ -9,12 +9,12 @@ function App() {
   SocketIO();
 
   return (
-    <div className='App'>
+    <div className="App">
       <Switch>
-        <Route path='/partyRoom/:id/:name'>
+        <Route path="/partyRoom/:id/:name">
           <PartyRoom />
         </Route>
-        <Route path='/'>
+        <Route path="/">
           <Main></Main>
         </Route>
       </Switch>

@@ -9,7 +9,7 @@ function ChatMessages() {
   const msgList = msgs.map((val, idx) => {
     return (
       <li key={idx}>
-        <div className='msg-wrapper'>
+        <div className="msg-wrapper">
           <p>{val.uid}</p>
           <p>{val.content}</p>
         </div>
@@ -17,7 +17,7 @@ function ChatMessages() {
     );
   });
 
-  return <ul className='chat-messages'>{msgList}</ul>;
+  return <ul className="chat-messages chat-body">{msgList}</ul>;
 }
 
 export default function Chat() {
@@ -39,9 +39,9 @@ export default function Chat() {
     setUserMsg('');
   }
   return (
-    <div className='party-room-chat'>
-      <ChatMessages className='chat-body' />
-      <div className='chat-input-wrapper'>
+    <div className="party-room-chat">
+      <ChatMessages />
+      <div className="chat-input-wrapper">
         {userMsgInput}
         <button onClick={onClickBtn}>send</button>
       </div>

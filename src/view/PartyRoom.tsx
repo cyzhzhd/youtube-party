@@ -8,7 +8,7 @@ import { useSetRecoilState } from 'recoil';
 import { partyRoomId } from '../store/state';
 
 export default function PartyRoom() {
-  const { id, name } = useParams();
+  const { id, name } = useParams<{ id: string; name: string }>();
   const setId = useSetRecoilState(partyRoomId);
 
   useEffect(() => {
@@ -16,8 +16,8 @@ export default function PartyRoom() {
   }, [id, setId]);
 
   return (
-    <div className='party-room'>
-      <div className='party-room-menu-bar'>{name}</div>
+    <div className="party-room">
+      <div className="party-room-menu-bar">{name}</div>
       <MainVideo />
       <Chat />
       <Videolist />

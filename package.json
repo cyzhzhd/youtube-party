@@ -16,6 +16,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:tsc": "tsc",
     "build:aws": "react-scripts build && rm -rf ../youtube-party-server/build && mv ./build ../youtube-party-server",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

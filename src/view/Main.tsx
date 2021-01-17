@@ -5,7 +5,7 @@ import PartyList from '../component/main/PartyList';
 
 function Main() {
   return (
-    <div className='Main'>
+    <div className="Main">
       <PartyList />
       <FrindList />
     </div>

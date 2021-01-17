@@ -12,7 +12,7 @@ import {
   currentVideoId,
 } from '../store/state';
 
-const url = process.env.REACT_APP_API_HOST;
+const url = process.env.REACT_APP_API_HOST as string;
 const socket = io(url, {
   reconnectionDelay: 10000,
   transports: ['websocket'],
@@ -29,7 +29,7 @@ export default function SocketIO() {
   const [curVideoId, setCurVideoId] = useRecoilState(currentVideoId);
 
   useEffect(() => {
-    socket.on('deliverVideoTime', (data) => {
+    socket.on('deliverVideoTime', (data: any) => {
       console.log('deliverVideoTime', data);
       if (data.videoId !== curVideoId) {
         setCurVideoId(data.videoId);
@@ -40,7 +40,7 @@ export default function SocketIO() {
   }, [curVideoId, setCurVideoId, setIsUpToDate, setTime]);
 
   useEffect(() => {
-    socket.on('deliverVideoId', (data) => {
+    socket.on('deliverVideoId', (data: any) => {
       console.log('deliverVideoId', data);
       setCurVideoId(data.videoId);
     });
@@ -48,7 +48,7 @@ export default function SocketIO() {
 
   // once user joined the website
   useEffect(() => {
-    socket.on('sessionId', (data) => {
+    socket.on('sessionId', (data: any) => {
       setUid(data);
     });
   }, [setUid]);
@@ -62,7 +62,7 @@ export default function SocketIO() {
 
   // when video is added in the list
   useEffect(() => {
-    socket.on('deliverPartyDetail', (partyDetail) => {
+    socket.on('deliverPartyDetail', (partyDetail: any) => {
       console.log(partyDetail);
       setList(partyDetail.videos);
     });
@@ -70,7 +70,7 @@ export default function SocketIO() {
 
   // when chatting
   useEffect(() => {
-    socket.once('deliverChat', (data) => {
+    socket.once('deliverChat', (data: any) => {
       console.log(data);
       setMsgs([...msgs, { uid, content: data.content }]);
     });

@@ -41,10 +41,9 @@ export default function MainVideo() {
     } else {
       setTime(player.getCurrentTime());
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [videoTime]);
 
-  function onReady(event) {
+  function onReady(event: any) {
     console.log('orReady', event.target);
     setPlayer(event.target);
     setInterval(() => {
@@ -53,7 +52,7 @@ export default function MainVideo() {
   }
 
   return (
-    <div className='party-room-main-video'>
+    <div className="party-room-main-video">
       <Youtube
         videoId={videoId}
         onReady={onReady}

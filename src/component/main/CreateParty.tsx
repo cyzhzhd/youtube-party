@@ -26,8 +26,8 @@ export default function CreateParty() {
     }
   }
   return (
-    <div className='partyList-party create-room'>
-      <img src={plusImage} alt='create' onClick={createRoom} />
+    <div className="partyList-party create-room">
+      <img src={plusImage} alt="create" onClick={createRoom} />
       <p>방 이름과 소개 메세지를 입력해주세요.</p>
       <div>
         <div>이름: {partyNameInput}</div>

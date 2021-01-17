@@ -38,17 +38,17 @@ export default function AddVideo() {
     setUrl('');
   }
   return (
-    <div className='party-room-add-video'>
-      <div className='party-room-add-form'>
+    <div className="party-room-add-video">
+      <div className="party-room-add-form">
         <button onClick={addVideoOnList}>add</button>
         {urlInput}
       </div>
-      <div className='party-room-adding-video'>{content}</div>
+      <div className="party-room-adding-video">{content}</div>
     </div>
   );
 }
 
-function urlParser(url) {
+function urlParser(url: string) {
   const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
   const match = url.match(regExp);
   if (match && match[2].length === 11) {

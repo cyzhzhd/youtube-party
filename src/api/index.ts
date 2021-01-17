@@ -9,11 +9,11 @@ const config = {
 function fetchPartyList() {
   return axios.get(`${config.baseUrl}/party`);
 }
-function createParty(options) {
+function createParty(options: any) {
   return axios.post(`${config.baseUrl}/party/create`, options);
 }
 
-function addVideoList(options) {
+function addVideoList(options: any) {
   return axios.post(`${config.baseUrl}/party/addVideo`, options);
 }
 

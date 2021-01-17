@@ -1,48 +1,52 @@
 import { atom, selector } from 'recoil';
 import { fetchPartyList } from '../api';
 
-export const sessionId = atom({
+export const sessionId = atom<string>({
   key: 'sessionId',
   default: 'member',
 });
 
-export const partyRoomId = atom({
+export const partyRoomId = atom<string | null>({
   key: 'partyRoomId',
   default: null,
 });
 
-export const message = atom({
+export const message = atom<string>({
   key: 'message',
   default: '',
 });
 
-export const messages = atom({
+interface messages {
+  uid: string;
+  content: string;
+}
+export const messages = atom<messages[]>({
   key: 'messagees',
   default: [],
 });
 
-export const socketQueue = atom({
+export const socketQueue = atom<any>({
   key: 'socketQueue',
   default: [],
 });
 
-export const videoList = atom({
+export const videoList = atom<any>({
   key: 'videoList',
   default: [],
 });
 
-export const currentVideoId = atom({
+export const currentVideoId = atom<string | null>({
   key: 'currentVideoId',
   default: null,
 });
 
-export const currentVideo = selector({
+export const currentVideo = selector<string | null>({
   key: 'currentVideo',
   get: ({ get }) => {
     const list = get(videoList);
     console.log(list);
     const id = get(currentVideoId);
-    const curVideo = list.find((element) => element.vid === id);
+    const curVideo = list.find((element: any) => element.vid === id);
     if (curVideo) {
       return curVideo.vid;
     }
@@ -51,37 +55,17 @@ export const currentVideo = selector({
   },
 });
 
-export const currentVideoTime = atom({
+export const currentVideoTime = atom<number>({
   key: 'currentVideoTime',
   default: 0,
 });
 
-export const isTimeUpToDate = atom({
+export const isTimeUpToDate = atom<boolean>({
   key: 'isTimeUpToDate',
   default: true,
 });
 
-// export const videoListThumbnail = selector({
-//   key: 'videoListThumbnail',
-//   get: ({ get }) => {
-//     const list = get(videoList);
-//     return list.map((val) => {
-//       return (
-//         <li key={val}>
-//           <Youtube
-//             videoId={val}
-//             opts={{
-//               height: '180',
-//               width: '240',
-//             }}
-//           />
-//         </li>
-//       );
-//     });
-//   },
-// });
-
-export const partyList = selector({
+export const partyList = selector<any>({
   key: 'partyList',
   get: async () => {
     try {

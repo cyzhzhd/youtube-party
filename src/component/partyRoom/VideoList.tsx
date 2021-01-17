@@ -9,7 +9,7 @@ export default function VideoList() {
   const setCurrentVideoId = useSetRecoilState(currentVideoId);
   const [queue, setQueue] = useRecoilState(socketQueue);
 
-  function deleteVideo(videoId) {
+  function deleteVideo(videoId: string) {
     setQueue([
       ...queue,
       {
@@ -20,7 +20,7 @@ export default function VideoList() {
     ]);
   }
 
-  function watchVideo(videoId) {
+  function watchVideo(videoId: string) {
     setCurrentVideoId(videoId);
     setQueue([
       ...queue,
@@ -30,8 +30,11 @@ export default function VideoList() {
       },
     ]);
   }
-
-  const list = videos.map((video) => {
+  interface video {
+    _id: string;
+    vid: string;
+  }
+  const list = videos.map((video: video) => {
     return (
       <li key={video._id}>
         <button onClick={() => deleteVideo(video.vid)}>delete</button>
@@ -48,8 +51,8 @@ export default function VideoList() {
   });
 
   return (
-    <div className='party-room-play-list'>
-      <ul className='party-room-video-list'>{list}</ul>
+    <div className="party-room-play-list">
+      <ul className="party-room-video-list">{list}</ul>
       <AddVideo />
     </div>
   );

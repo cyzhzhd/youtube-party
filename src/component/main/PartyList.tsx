@@ -6,20 +6,31 @@ import CeateParty from './CreateParty';
 import coverImage from '../../assets/images/cover.png';
 import { partyList } from '../../store/state';
 
-function DisplayPartyList(list) {
-  const partyList = list.map((val) => (
-    <div key={val._id} className='partyList-party'>
+interface user {
+  _id: string;
+}
+interface party {
+  _id: string;
+  name: string;
+  hostId: string;
+  description: string;
+  userList: user[];
+}
+
+function DisplayPartyList(list: party[]) {
+  const partyList = list.map((val: party) => (
+    <div key={val._id} className="partyList-party">
       <Link to={`/partyRoom/${val._id}/${val.name}`}>
-        <div className='partyList-cover-image'>
-          <img alt='coverImage' src={coverImage} />
+        <div className="partyList-cover-image">
+          <img alt="coverImage" src={coverImage} />
         </div>
-        <div className='partyList-details-wrapper'>
-          <div className='partyList-detail'>
+        <div className="partyList-details-wrapper">
+          <div className="partyList-detail">
             <div>{val.name}</div>
             <div>{val.hostId}</div>
             <div>{val.userList.length}</div>
           </div>
-          <div className='partyList-intro'>{val.description}</div>
+          <div className="partyList-intro">{val.description}</div>
         </div>
       </Link>
     </div>
@@ -44,8 +55,8 @@ export default function PartyList() {
   }
 
   return (
-    <ul className='party-list'>
-      <li className='partyList-parties-wrapper'>
+    <ul className="party-list">
+      <li className="partyList-parties-wrapper">
         <CeateParty />
         {content}
       </li>
