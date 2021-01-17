@@ -1,6 +1,6 @@
 import React from 'react';
 import useInput from '../../hook/useInput';
-import { createParty } from '../../api/index.js';
+import { createParty } from '../../api/';
 import plusImage from '../../assets/images/plus.png';
 import { useRecoilValue } from 'recoil';
 import { sessionId } from '../../store/state';
