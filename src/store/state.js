@@ -40,13 +40,14 @@ export const currentVideo = selector({
   key: 'currentVideo',
   get: ({ get }) => {
     const list = get(videoList);
+    console.log(list);
     const id = get(currentVideoId);
-    const curVideo = list.find((element) => element === id);
+    const curVideo = list.find((element) => element.vid === id);
     if (curVideo) {
-      return curVideo;
+      return curVideo.vid;
     }
 
-    return list[0];
+    return list[0] && list[0].vid;
   },
 });
 

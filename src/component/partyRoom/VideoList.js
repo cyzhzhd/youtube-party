@@ -5,7 +5,7 @@ import { currentVideoId, socketQueue, videoList } from '../../store/state';
 import AddVideo from './AddVideo';
 
 export default function VideoList() {
-  const idList = useRecoilValue(videoList);
+  const videos = useRecoilValue(videoList);
   const setCurrentVideoId = useSetRecoilState(currentVideoId);
   const [queue, setQueue] = useRecoilState(socketQueue);
 
@@ -31,13 +31,13 @@ export default function VideoList() {
     ]);
   }
 
-  const list = idList.map((id) => {
+  const list = videos.map((video) => {
     return (
-      <li key={id}>
-        <button onClick={() => deleteVideo(id)}>delete</button>
-        <button onClick={() => watchVideo(id)}>watch</button>
+      <li key={video._id}>
+        <button onClick={() => deleteVideo(video.vid)}>delete</button>
+        <button onClick={() => watchVideo(video.vid)}>watch</button>
         <Youtube
-          videoId={id}
+          videoId={video.vid}
           opts={{
             height: '180',
             width: '240',

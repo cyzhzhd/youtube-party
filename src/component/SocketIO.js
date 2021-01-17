@@ -29,7 +29,6 @@ export default function SocketIO() {
   const [curVideoId, setCurVideoId] = useRecoilState(currentVideoId);
 
   useEffect(() => {
-    console.log('deliverVideoTime');
     socket.on('deliverVideoTime', (data) => {
       console.log('deliverVideoTime', data);
       if (data.videoId !== curVideoId) {
