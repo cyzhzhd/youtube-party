@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './assets/css/App.css';
 import Main from './view/Main';
 import PartyRoom from './view/PartyRoom';
 import SocketIO from './component/SocketIO';
 
-function App() {
+function App(): ReactElement {
   SocketIO();
 
   return (

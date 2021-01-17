@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Youtube from 'react-youtube';
 import {
@@ -9,7 +9,7 @@ import {
   isTimeUpToDate,
 } from '../../store/state';
 
-export default function MainVideo() {
+export default function MainVideo(): ReactElement {
   const videoId = useRecoilValue(currentVideo);
   const partyId = useRecoilValue(partyRoomId);
   const [time, setTime] = useRecoilState(currentVideoTime);
@@ -19,7 +19,8 @@ export default function MainVideo() {
   const [videoTime, setVideoTime] = useState(0);
 
   useEffect(() => {
-    if (!player) return;
+    if (player === undefined || player === null) return;
+
     if (Math.abs(time - player.getCurrentTime()) > 2) {
       if (isUpToDate) {
         console.log('before', time, player.getCurrentTime());
@@ -43,6 +44,7 @@ export default function MainVideo() {
     }
   }, [videoTime]);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function onReady(event: any) {
     console.log('orReady', event.target);
     setPlayer(event.target);

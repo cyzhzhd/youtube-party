@@ -1,14 +1,15 @@
 import { atom, selector } from 'recoil';
 import { fetchPartyList } from '../api';
+import { messagesType, QueueItem, Video } from '../types';
 
 export const sessionId = atom<string>({
   key: 'sessionId',
   default: 'member',
 });
 
-export const partyRoomId = atom<string | null>({
+export const partyRoomId = atom<string>({
   key: 'partyRoomId',
-  default: null,
+  default: '',
 });
 
 export const message = atom<string>({
@@ -16,37 +17,33 @@ export const message = atom<string>({
   default: '',
 });
 
-interface messages {
-  uid: string;
-  content: string;
-}
-export const messages = atom<messages[]>({
+export const messages = atom<messagesType[]>({
   key: 'messagees',
   default: [],
 });
 
-export const socketQueue = atom<any>({
+export const socketQueue = atom<Partial<QueueItem>[]>({
   key: 'socketQueue',
   default: [],
 });
 
-export const videoList = atom<any>({
+export const videoList = atom<Video[]>({
   key: 'videoList',
   default: [],
 });
 
-export const currentVideoId = atom<string | null>({
+export const currentVideoId = atom<string>({
   key: 'currentVideoId',
-  default: null,
+  default: '',
 });
 
-export const currentVideo = selector<string | null>({
+export const currentVideo = selector<string>({
   key: 'currentVideo',
   get: ({ get }) => {
     const list = get(videoList);
     console.log(list);
     const id = get(currentVideoId);
-    const curVideo = list.find((element: any) => element.vid === id);
+    const curVideo = list.find((element: Video) => element.vid === id);
     if (curVideo) {
       return curVideo.vid;
     }

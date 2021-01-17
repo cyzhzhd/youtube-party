@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import Youtube from 'react-youtube';
 import { useRecoilState } from 'recoil';
 import useInput from '../../hook/useInput';
 import { socketQueue } from '../../store/state';
 
-export default function AddVideo() {
+export default function AddVideo(): ReactElement {
   const [url, urlInput, setUrl] = useInput({ type: 'text' });
   // const [list, setList] = useRecoilState(videoList);
   const [queue, setQueue] = useRecoilState(socketQueue);

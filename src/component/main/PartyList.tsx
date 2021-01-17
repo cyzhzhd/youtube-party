@@ -1,24 +1,14 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilValueLoadable } from 'recoil';
 import '../../assets/css/PartyList.css';
 import CeateParty from './CreateParty';
 import coverImage from '../../assets/images/cover.png';
 import { partyList } from '../../store/state';
+import { PartyListResponse } from '../../types';
 
-interface user {
-  _id: string;
-}
-interface party {
-  _id: string;
-  name: string;
-  hostId: string;
-  description: string;
-  userList: user[];
-}
-
-function DisplayPartyList(list: party[]) {
-  const partyList = list.map((val: party) => (
+function DisplayPartyList(list: PartyListResponse[]) {
+  const partyList = list.map((val: PartyListResponse) => (
     <div key={val._id} className="partyList-party">
       <Link to={`/partyRoom/${val._id}/${val.name}`}>
         <div className="partyList-cover-image">
@@ -39,7 +29,7 @@ function DisplayPartyList(list: party[]) {
   return partyList;
 }
 
-export default function PartyList() {
+export default function PartyList(): ReactElement {
   const partyListLoadable = useRecoilValueLoadable(partyList);
 
   let content = null;

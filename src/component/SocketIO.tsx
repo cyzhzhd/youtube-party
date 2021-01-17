@@ -11,6 +11,7 @@ import {
   isTimeUpToDate,
   currentVideoId,
 } from '../store/state';
+import { ChatMsg, PartyResponse, VideoInfo } from '../types';
 
 const url = process.env.REACT_APP_API_HOST as string;
 const socket = io(url, {
@@ -18,7 +19,7 @@ const socket = io(url, {
   transports: ['websocket'],
 }).connect();
 
-export default function SocketIO() {
+export default function SocketIO(): void {
   const partyId = useRecoilValue(partyRoomId);
   const [uid, setUid] = useRecoilState(sessionId);
   const setList = useSetRecoilState(videoList);
@@ -29,7 +30,7 @@ export default function SocketIO() {
   const [curVideoId, setCurVideoId] = useRecoilState(currentVideoId);
 
   useEffect(() => {
-    socket.on('deliverVideoTime', (data: any) => {
+    socket.on('deliverVideoTime', (data: VideoInfo) => {
       console.log('deliverVideoTime', data);
       if (data.videoId !== curVideoId) {
         setCurVideoId(data.videoId);
@@ -40,7 +41,7 @@ export default function SocketIO() {
   }, [curVideoId, setCurVideoId, setIsUpToDate, setTime]);
 
   useEffect(() => {
-    socket.on('deliverVideoId', (data: any) => {
+    socket.on('deliverVideoId', (data: { videoId: string }) => {
       console.log('deliverVideoId', data);
       setCurVideoId(data.videoId);
     });
@@ -48,7 +49,7 @@ export default function SocketIO() {
 
   // once user joined the website
   useEffect(() => {
-    socket.on('sessionId', (data: any) => {
+    socket.on('sessionId', (data: string) => {
       setUid(data);
     });
   }, [setUid]);
@@ -62,7 +63,7 @@ export default function SocketIO() {
 
   // when video is added in the list
   useEffect(() => {
-    socket.on('deliverPartyDetail', (partyDetail: any) => {
+    socket.on('deliverPartyDetail', (partyDetail: PartyResponse) => {
       console.log(partyDetail);
       setList(partyDetail.videos);
     });
@@ -70,7 +71,7 @@ export default function SocketIO() {
 
   // when chatting
   useEffect(() => {
-    socket.once('deliverChat', (data: any) => {
+    socket.once('deliverChat', (data: ChatMsg) => {
       console.log(data);
       setMsgs([...msgs, { uid, content: data.content }]);
     });

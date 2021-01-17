@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { useParams } from 'react-router';
 import '../assets/css/PartyRoom.css';
 import Videolist from '../component/partyRoom/VideoList';
@@ -7,7 +7,7 @@ import Chat from '../component/partyRoom/Chat';
 import { useSetRecoilState } from 'recoil';
 import { partyRoomId } from '../store/state';
 
-export default function PartyRoom() {
+export default function PartyRoom(): ReactElement {
   const { id, name } = useParams<{ id: string; name: string }>();
   const setId = useSetRecoilState(partyRoomId);
 

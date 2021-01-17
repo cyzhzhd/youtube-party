@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import useInput from '../../hook/useInput';
 import { message, messages, sessionId, socketQueue } from '../../store/state';
@@ -20,7 +20,7 @@ function ChatMessages() {
   return <ul className="chat-messages chat-body">{msgList}</ul>;
 }
 
-export default function Chat() {
+export default function Chat(): ReactElement {
   const [queue, setQueue] = useRecoilState(socketQueue);
   const uid = useRecoilValue(sessionId);
   const setSendingMsg = useSetRecoilState(message);

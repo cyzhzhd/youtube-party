@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import '../assets/css/Main.css';
 import FrindList from '../component/main/FriendList';
 import PartyList from '../component/main/PartyList';
 
-function Main() {
+function Main(): ReactElement {
   return (
     <div className="Main">
       <PartyList />

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import Youtube from 'react-youtube';
 import { currentVideoId, socketQueue, videoList } from '../../store/state';
 import AddVideo from './AddVideo';
+import { Video } from '../../types';
 
-export default function VideoList() {
+export default function VideoList(): ReactElement {
   const videos = useRecoilValue(videoList);
   const setCurrentVideoId = useSetRecoilState(currentVideoId);
   const [queue, setQueue] = useRecoilState(socketQueue);
@@ -30,11 +31,8 @@ export default function VideoList() {
       },
     ]);
   }
-  interface video {
-    _id: string;
-    vid: string;
-  }
-  const list = videos.map((video: video) => {
+
+  const list = videos.map((video: Video) => {
     return (
       <li key={video._id}>
         <button onClick={() => deleteVideo(video.vid)}>delete</button>

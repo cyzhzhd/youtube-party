@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import useInput from '../../hook/useInput';
 import { createParty } from '../../api/';
 import plusImage from '../../assets/images/plus.png';
 import { useRecoilValue } from 'recoil';
 import { sessionId } from '../../store/state';
 
-export default function CreateParty() {
+export default function CreateParty(): ReactElement {
   const [partyName, partyNameInput, setPartyName] = useInput({ type: 'text' });
   const [partyDesc, partyDescInput, setPartyDesc] = useInput({ type: 'text' });
   const uId = useRecoilValue(sessionId);
