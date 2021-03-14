@@ -7,13 +7,12 @@ export interface Video {
   title?: string;
 }
 export interface PartyListResponse {
-  description: string;
-  hostId: string;
-  name: string;
+  uid: string;
+  partyName: string;
   startTime: string;
   userList: User[];
   videos: Video[];
-  __v: number;
+  numUsers: number;
   _id: string;
 }
 

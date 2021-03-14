@@ -1,9 +1,9 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './assets/css/App.css';
-import Main from './view/Main';
-import PartyRoom from './view/PartyRoom';
-import SocketIO from './component/SocketIO';
+import Main from './presenter/Main';
+import PartyRoom from './presenter/PartyRoom';
+import SocketIO from './model/Socket';
 
 function App(): ReactElement {
   SocketIO();
@@ -11,11 +11,11 @@ function App(): ReactElement {
   return (
     <div className="App">
       <Switch>
-        <Route path="/partyRoom/:id/:name">
+        <Route exact path="/partyRoom/:partyId">
           <PartyRoom />
         </Route>
-        <Route path="/">
-          <Main></Main>
+        <Route exact path="/">
+          <Main />
         </Route>
       </Switch>
     </div>
