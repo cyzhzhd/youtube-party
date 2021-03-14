@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import '../assets/css/Main.css';
-import useParty from '../model/Party';
+import useParty from '../model/Party/PartyModel';
 import FrindList from '../view/main/FriendList';
 import PartyList from '../view/main/PartyList';
 

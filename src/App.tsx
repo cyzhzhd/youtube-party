@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import './assets/css/App.css';
 import Main from './presenter/Main';
 import PartyRoom from './presenter/PartyRoom';
-import SocketIO from './model/Socket';
+import SocketIO from './model/Socket/SocketModel';
 
 function App(): ReactElement {
   SocketIO();
