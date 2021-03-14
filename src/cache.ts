@@ -15,7 +15,8 @@ const cache = new InMemoryCache({
                   hasMore: true,
                   parties: {},
                 };
-            incoming.parties.forEach(item => {
+            console.log(incoming);
+            incoming.parties.forEach((item: { __ref: string }) => {
               const id = readField('_id', item) as string;
               merged.parties[id] = item;
             });

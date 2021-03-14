@@ -3,7 +3,7 @@ import useInput from '../../hooks/useInput';
 import plusImage from '../../assets/images/plus.png';
 
 interface Props {
-  createParty: (string) => void;
+  createParty: (partyName: string) => void;
 }
 export default function CreatePartyBox({ createParty }: Props): ReactElement {
   const [partyName, partyNameInput, setPartyName] = useInput({ type: 'text' });

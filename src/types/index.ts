@@ -18,17 +18,8 @@ export interface PartyListResponse {
 
 export interface PartyResponse {
   _id: string;
-  description: string;
+  partyName: string;
   videos: Video[];
-  name: string;
-  hostId: string;
-  startTime: Date;
-}
-
-export interface CreatePartyOption {
-  name: string;
-  description: string;
-  hostId: string;
 }
 
 export interface messagesType {
@@ -54,9 +45,4 @@ export interface ChatMsg {
   uid: string;
   content: string;
   time: Date;
-}
-
-export interface PartyListLoadable {
-  state: string;
-  contents: PartyListResponse[];
 }

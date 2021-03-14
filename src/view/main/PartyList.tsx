@@ -12,7 +12,7 @@ import useIntersectionObserver from '../../hooks/useIntersectionObserver';
 
 const PAGENATION_LIMIT = 20;
 interface Props {
-  createParty: (string) => void;
+  createParty: (partyName: string) => void;
 }
 export default function PartyList({ createParty }: Props): ReactElement {
   const { data, error, loading, fetchMore } = useQuery(GET_PARTY_LIST, {

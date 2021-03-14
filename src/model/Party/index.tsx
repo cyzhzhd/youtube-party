@@ -4,7 +4,7 @@ import { CREATE_PARTY } from '../../queries/party';
 
 type ReturnType = {
   operations: {
-    createParty: (string) => void;
+    createParty: (partyName: string) => void;
   };
 };
 export default function useParty(): ReturnType {
