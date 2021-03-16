@@ -1,19 +1,22 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import Youtube from 'react-youtube';
-import useInput from '../../hooks/useInput';
-import { socketQueueVar } from '../../cache';
 import { useParams } from 'react-router';
 import { useReactiveVar } from '@apollo/client';
+import styles from '../../assets/scss/PartyRoom.module.scss';
+import useInput from '../../hooks/useInput';
+import { socketQueueVar } from '../../cache';
 import urlParser from '../../helper/urlParser';
 
-export default function AddVideo(): ReactElement {
+interface Props {
+  backToList: () => void;
+}
+export default function AddVideo({ backToList }: Props): ReactElement {
   const [url, urlInput, setUrl] = useInput({ type: 'text' });
   const { partyId } = useParams<{ partyId: string }>();
   const queue = useReactiveVar(socketQueueVar);
   const videoId = urlParser(url);
 
   function addVideoOnList() {
-    if (videoId === 'error') return;
     socketQueueVar([
       ...queue,
       {
@@ -24,22 +27,29 @@ export default function AddVideo(): ReactElement {
       },
     ]);
     setUrl('');
+    backToList();
   }
   return (
-    <div className="party-room-add-video">
-      <div className="party-room-add-form">
-        <button onClick={addVideoOnList}>add</button>
-        {urlInput}
+    <div className={styles.addVideo}>
+      <div className={styles.addForm}>
+        <div>URL: {urlInput}</div>
       </div>
-      <div className="party-room-adding-video">
+      <div className={styles.searchedVideoForm}>
         {videoId !== 'error' && (
-          <Youtube
-            videoId={videoId}
-            opts={{
-              height: '180',
-              width: '240',
-            }}
-          />
+          <>
+            <div className={styles.searchedVideo}>
+              <Youtube
+                videoId={videoId}
+                opts={{
+                  height: '100%',
+                  width: '100%',
+                }}
+              />
+            </div>
+            <div>
+              <button onClick={addVideoOnList}>추가하기</button>
+            </div>
+          </>
         )}
       </div>
     </div>

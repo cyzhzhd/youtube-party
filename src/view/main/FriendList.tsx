@@ -1,5 +1,6 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
+import styles from '../../assets/scss/FriendList.module.scss';
 
 export default function FriendList(): ReactElement {
-  return <div className="friend-list">friendList area</div>;
+  return <div className={styles.friendList}>친구 목록</div>;
 }

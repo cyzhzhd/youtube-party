@@ -1,6 +1,6 @@
-import React, { ReactElement, useRef } from 'react';
+import { ReactElement, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import '../../assets/css/PartyList.css';
+import styles from '../../assets/scss/PartyList.module.scss';
 import CeatePartyBox from './CreatePartyBox';
 import coverImage from '../../assets/images/cover.png';
 import { PartyListResponse } from '../../types';
@@ -32,20 +32,30 @@ export default function PartyList({ createParty }: Props): ReactElement {
   if (error) return <Error />;
   if (loading) return <Loading />;
   return (
-    <ul className="party-list">
-      <li className="partyList-parties-wrapper">
+    <ul className={styles.partyListWrapper}>
+      <li className={styles.partyList}>
         <CeatePartyBox {...{ createParty }} />
         {data?.parties.parties.map((party: PartyListResponse) => (
-          <div key={party._id} className="partyList-party">
+          <div key={party._id} className={styles.party}>
             <Link to={`/partyRoom/${party._id}`}>
-              <div className="partyList-cover-image">
-                <img alt="coverImage" src={coverImage} />
+              <div className={styles.partyName}>{party.partyName}</div>
+              <div>
+                <img className={styles.thumbnail} alt="coverImage" src={coverImage} />
               </div>
-              <div className="partyList-details-wrapper">
-                <div className="partyList-detail">
-                  <div>{party.partyName}</div>
-                  <div>{party.uid}</div>
-                  <div>{party.numUsers}</div>
+              <div className={styles.partyDetailWrapper}>
+                <div className={styles.partyDetail}>
+                  <div className={styles.hostID}>
+                    <i className="fas fa-user" />
+                    {party.uid}
+                  </div>
+                  <div>
+                    <i className="fas fa-users" />
+                    {party.numUsers}명
+                  </div>
+                  <div>
+                    <i className="fas fa-star" />
+                    {party.bookmarked}명
+                  </div>
                 </div>
               </div>
             </Link>

@@ -13,6 +13,7 @@ export interface PartyListResponse {
   userList: User[];
   videos: Video[];
   numUsers: number;
+  bookmarked: number;
   _id: string;
 }
 
