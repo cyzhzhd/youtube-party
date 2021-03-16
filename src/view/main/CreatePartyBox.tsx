@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
+import styles from '../../assets/scss/PartyList.module.scss';
 import useInput from '../../hooks/useInput';
-import plusImage from '../../assets/images/plus.png';
 
 interface Props {
   createParty: (partyName: string) => void;
@@ -13,12 +13,12 @@ export default function CreatePartyBox({ createParty }: Props): ReactElement {
     setPartyName('');
   }
   return (
-    <div className="partyList-party create-room">
-      <img src={plusImage} alt="create" onClick={onClickHandler} />
-      <p>방 이름과 소개 메세지를 입력해주세요.</p>
+    <div className={[styles.party, styles.createPartyBox].join(' ')}>
       <div>
-        <div>이름: {partyNameInput}</div>
+        <i className="fas fa-plus fa-4x" onClick={onClickHandler} />
       </div>
+      <div>방 이름을 입력해주세요.</div>
+      <div>{partyNameInput}</div>
     </div>
   );
 }

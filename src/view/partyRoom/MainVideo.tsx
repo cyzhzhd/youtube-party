@@ -1,9 +1,10 @@
 import { ReactElement, useEffect, useState } from 'react';
 import Youtube from 'react-youtube';
-import { videoTimeVar, socketQueueVar, isTimeUpToDateVar, videoIdVar } from '../../cache';
 import { useReactiveVar } from '@apollo/client';
 import { useParams } from 'react-router';
 import { YouTubePlayer } from 'youtube-player/dist/types';
+import styles from '../../assets/scss/PartyRoom.module.scss';
+import { videoTimeVar, socketQueueVar, isTimeUpToDateVar, videoIdVar } from '../../cache';
 
 export default function MainVideo(): ReactElement {
   const { partyId } = useParams<{ partyId: string }>();
@@ -46,16 +47,16 @@ export default function MainVideo(): ReactElement {
   }
 
   return (
-    <div className="party-room-main-video">
+    <div className={styles.mainVideoWrapper}>
       <Youtube
+        className={styles.mainVideo}
         {...{ videoId, onReady }}
         opts={{
-          height: '480',
-          width: '720',
+          height: '100%',
+          width: '100%',
           playerVars: { autoplay: 1 },
         }}
       />
-      )
     </div>
   );
 }
