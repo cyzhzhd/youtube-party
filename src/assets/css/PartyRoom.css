@@ -1,4 +1,4 @@
-.party-room {
+/* .party-room {
   display: grid;
   grid-template-columns: 1fr 300px;
   grid-template-rows: 50px 1fr 200px;
@@ -26,7 +26,6 @@
   overflow-y: auto;
   height: calc(1fr - 350px);
   justify-content: space-between;
-  /* height: 400px; */
 }
 .party-room-play-list {
   border: 1px green solid;
@@ -44,4 +43,4 @@
   grid-area: addList;
   display: flex;
   flex-direction: column;
-}
+} */

@@ -1,0 +1,53 @@
+@import './App.module.scss';
+
+.partyList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, auto));
+}
+.party  {
+  background-color: white;
+  border: 2px $color4 solid;
+  margin: 15px;
+  background-color: $color1;
+}
+.thumbnail {
+  width: 100%;
+}
+.createPartyBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+  color: $color3;
+  font-weight: 700;
+  div {
+    color: $color5;
+    padding: 5px;
+    i {
+      &:hover {
+        cursor: pointer;
+        color: $color4;
+      }
+    }
+  }
+}
+.partyDetailWrapper {
+  display: flex;
+  flex-direction: column;
+}
+.partyDetail {
+  display: flex;
+  justify-content: space-around;
+}
+.partyName {
+  font-weight: 700;
+  padding: 3px;
+  margin-left: 5px;
+}
+.hostID {
+  width: 9rem; 
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

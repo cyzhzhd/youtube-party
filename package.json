@@ -2,24 +2,23 @@
   "name": "reactv",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3001",
   "dependencies": {
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
+    "@apollo/client": "^3.3.11",
     "axios": "^0.21.1",
+    "graphql": "^15.5.0",
+    "node-sass": "4.14.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "react-youtube": "^7.13.0",
     "recoil": "^0.1.2",
-    "socket.io-client": "^3.0.4",
-    "web-vitals": "^0.2.4"
+    "socket.io-client": "^3.0.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:tsc": "tsc",
     "build:aws": "react-scripts build && rm -rf ../youtube-party-server/build && mv ./build ../youtube-party-server",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -41,5 +40,19 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.21",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/react-router-dom": "^5.1.7",
+    "@types/youtube-player": "^5.5.3",
+    "@typescript-eslint/eslint-plugin": "^4.13.0",
+    "@typescript-eslint/parser": "^4.13.0",
+    "eslint": "^7.18.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "prettier": "^2.2.1",
+    "typescript": "^4.1.3"
   }
 }
