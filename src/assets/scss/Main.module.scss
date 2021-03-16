@@ -34,10 +34,14 @@
 .headerOptions {
   display: flex;
   align-items: center;
+  cursor: pointer;
   div {
     padding: 15px;
     i {
       padding-left: 10px;
+    }
+    &:hover {
+      color: $color5;
     }
   }
 }
