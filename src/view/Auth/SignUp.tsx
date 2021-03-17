@@ -1,25 +1,45 @@
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 import styles from '../../assets/scss/Auth.module.scss';
 import useInput from '../../hooks/useInput';
 
 interface Props {
-  singInMode: () => void;
+  signInMode: () => void;
+  signUpUser: (id: string, password: string, nickName: string) => void;
 }
-export default function SignUp({ singInMode }: Props): ReactElement {
+export default function SignUp({ signInMode, signUpUser }: Props): ReactElement {
   const [ID, IDInput, setID] = useInput({ type: 'text' });
   const [PW, PWInput, setPW] = useInput({ type: 'password' });
   const [confirmPW, confirmPWInput, setConfirmPW] = useInput({ type: 'password' });
   const [nickName, nickNameInput, setNickName] = useInput({ type: 'text' });
 
+  const [errorMsg, setErrorMsg] = useState('');
   function signUpHandler() {
-    // auth function
-    console.log(ID, PW, nickName);
+    if (!ID) {
+      setErrorMsg('아이디를 입력해주세요.');
+      return;
+    }
+    if (!nickName) {
+      setErrorMsg('닉네임을 입력해주세요.');
+      return;
+    }
+    if (!PW || !confirmPW) {
+      setErrorMsg('패스워드를 입력해주세요.');
+      return;
+    }
+    if (PW !== confirmPW) {
+      setErrorMsg('비밀번호를 다시 확인해주세요.');
+      return;
+    }
+
+    signUpUser(ID, PW, nickName);
     setID('');
     setPW('');
+    setConfirmPW('');
     setNickName('');
+    setErrorMsg('');
   }
   return (
-    <div className={styles.singInWrapper}>
+    <div className={styles.signInWrapper}>
       <div className={styles.title}>회원가입</div>
       <div className={styles.inputForm}>
         <div>
@@ -40,8 +60,9 @@ export default function SignUp({ singInMode }: Props): ReactElement {
         </div>
       </div>
       <div className={styles.optionWrapper}>
-        <div onClick={singInMode}>로그인 하기</div>
+        <div onClick={signInMode}>이미 아이디가 있으십니까?</div>
       </div>
+      {errorMsg && <div className={styles.errorMsg}>{errorMsg}</div>}
       <div className={styles.signBtn}>
         <button onClick={signUpHandler}>계정 만들기</button>
       </div>

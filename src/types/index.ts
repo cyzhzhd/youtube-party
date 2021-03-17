@@ -7,7 +7,7 @@ export interface Video {
   title?: string;
 }
 export interface PartyListResponse {
-  uid: string;
+  hostId: string;
   partyName: string;
   startTime: string;
   userList: User[];

@@ -1,17 +1,26 @@
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 import styles from '../../assets/scss/Auth.module.scss';
 import useInput from '../../hooks/useInput';
 
 interface Props {
-  singUpMode: () => void;
+  signUpMode: () => void;
+  signInUesr: (id: string, password: string) => void;
 }
-export default function SingIn({ singUpMode }: Props): ReactElement {
+export default function SingIn({ signUpMode, signInUesr }: Props): ReactElement {
   const [ID, IDInput, setID] = useInput({ type: 'text' });
   const [PW, PWInput, setPW] = useInput({ type: 'password' });
 
+  const [errorMsg, setErrorMsg] = useState('');
   function signInHandler() {
-    // auth function
-    console.log(ID, PW);
+    if (!ID) {
+      setErrorMsg('아이디를 입력해주세요.');
+      return;
+    }
+    if (!PW) {
+      setErrorMsg('비밀번호를 입력해주세요.');
+      return;
+    }
+    signInUesr(ID, PW);
     setID('');
     setPW('');
   }
@@ -30,8 +39,9 @@ export default function SingIn({ singUpMode }: Props): ReactElement {
       </div>
       <div className={styles.optionWrapper}>
         <div>아이디 혹은 비밀번호를 잊었습니까?</div>
-        <div onClick={singUpMode}>계정 만들기</div>
+        <div onClick={signUpMode}>계정 만들기</div>
       </div>
+      {errorMsg && <div className={styles.errorMsg}>{errorMsg}</div>}
       <div className={styles.signBtn}>
         <button onClick={signInHandler}>로그인 하기</button>
       </div>

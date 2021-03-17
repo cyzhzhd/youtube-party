@@ -46,7 +46,7 @@ export default function PartyList({ createParty }: Props): ReactElement {
                 <div className={styles.partyDetail}>
                   <div className={styles.hostID}>
                     <i className="fas fa-user" />
-                    {party.uid}
+                    {party.hostId}
                   </div>
                   <div>
                     <i className="fas fa-users" />
