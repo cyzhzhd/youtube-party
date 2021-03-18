@@ -5,9 +5,11 @@ import Main from './presenter/Main';
 import PartyRoom from './presenter/PartyRoom';
 import SocketIO from './model/Socket/SocketModel';
 import Auth from './presenter/Auth';
+import useInit from './model/Main/initModel';
 
 function App(): ReactElement {
   SocketIO();
+  useInit();
 
   return (
     <div className={styles.App}>

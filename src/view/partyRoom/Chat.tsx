@@ -31,7 +31,7 @@ function ChatList() {
         {msgs.map((val, idx) => (
           <li key={idx}>
             <div className={styles.messageWrapper}>
-              <p>{val.uid}</p>
+              <p>{val.nickName}</p>
               <p>{val.content}</p>
             </div>
           </li>

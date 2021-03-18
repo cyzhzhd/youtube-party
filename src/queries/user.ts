@@ -26,14 +26,10 @@ export const userFragment = {
   `,
 };
 
-export const SIGN_IN_USER = gql`
-  mutation SignInUser($id: String!, $password: String!) {
-    signInUser(id: $id, password: $password) {
-      success
-      message
-      user {
-        ...UserDetail
-      }
+export const GET_USER = gql`
+  query GetUser {
+    user {
+      ...UserDetail
     }
   }
   ${userFragment.user}

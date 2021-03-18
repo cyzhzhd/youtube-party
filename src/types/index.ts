@@ -23,8 +23,15 @@ export interface PartyResponse {
   videos: Video[];
 }
 
+export interface ChatMsg {
+  uid: string;
+  nickName: string;
+  content: string;
+  time: Date;
+}
 export interface messagesType {
   uid: string;
+  nickName: string;
   content: string;
 }
 export interface QueueItem {
@@ -42,8 +49,21 @@ export interface VideoInfo {
   time: number;
 }
 
-export interface ChatMsg {
+export interface UserData {
+  _id?: string;
+  uid?: string;
+  sessionId?: string;
+  status?: string;
+  nickName?: string;
+  joinedTime?: number;
+  friendList?: FriendList[];
+  bookmarkedParties?: PartyListResponse[];
+}
+
+export interface FriendList {
+  _id: string;
   uid: string;
-  content: string;
-  time: Date;
+  nickName: string;
+  status: string;
+  partyName: string;
 }
