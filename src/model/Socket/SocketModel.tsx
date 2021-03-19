@@ -9,7 +9,7 @@ import {
   videoTimeVar,
   isTimeUpToDateVar,
   videoIdVar,
-  userDataVar,
+  userVar,
 } from '../../cache';
 import { generateRandomId } from '../../helper/generateRandomId';
 import { ChatMsg, PartyResponse, VideoInfo } from '../../types';
@@ -28,7 +28,7 @@ export default function initSocket(): void {
   const videoList = useReactiveVar(videoListVar);
   const videoTime = useReactiveVar(videoTimeVar);
   const isTimeUpToDate = useReactiveVar(isTimeUpToDateVar);
-  const userData = useReactiveVar(userDataVar);
+  const userData = useReactiveVar(userVar);
 
   /**
    * once user joined the website, get a session Id from server
@@ -37,9 +37,9 @@ export default function initSocket(): void {
     socket.on('sessionId', (data: string) => {
       console.log('userData', userData);
       if (userData) {
-        userDataVar({ ...userData, sessionId: data });
+        userVar({ ...userData, sessionId: data });
       } else {
-        userDataVar({
+        userVar({
           nickName: generateRandomId(),
           sessionId: data,
         });

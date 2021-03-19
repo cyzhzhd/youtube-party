@@ -1,7 +1,7 @@
 import { useLazyQuery, useReactiveVar } from '@apollo/client';
 import { useEffect } from 'react';
 import { fetchJWT } from '../../api';
-import { jwtVar, userDataVar } from '../../cache';
+import { jwtVar, userVar } from '../../cache';
 import { GET_USER } from '../../queries/user';
 import { UserData } from '../../types';
 
@@ -25,10 +25,10 @@ export default function useInit(): void {
     }
   }, [jwt]);
 
-  const userData = useReactiveVar(userDataVar);
+  const userData = useReactiveVar(userVar);
   useEffect(() => {
     if (data) {
-      userDataVar({ ...userData, ...data?.user });
+      userVar({ ...userData, ...data?.user });
     }
   }, [data]);
 }

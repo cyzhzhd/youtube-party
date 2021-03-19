@@ -49,6 +49,6 @@ export const videoTimeVar = makeVar<number>(0);
 export const isTimeUpToDateVar = makeVar<boolean>(true);
 
 export const jwtVar = makeVar<string>('');
-export const userDataVar = makeVar<UserData | undefined>(undefined);
+export const userVar = makeVar<UserData | undefined>(undefined);
 
 export default cache;
