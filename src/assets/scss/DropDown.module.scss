@@ -1,0 +1,11 @@
+@import './App.module.scss';
+.dropDownWrapper {
+  position: relative;
+  user-select: none;
+}
+.dropDown {
+  position: absolute;
+  cursor: pointer;
+  background-color: white;
+  z-index: 100;
+}

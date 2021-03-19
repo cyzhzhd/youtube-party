@@ -3,12 +3,23 @@ import styles from '../assets/scss/Main.module.scss';
 import logo from '../assets/images/logo.png';
 import { useHistory } from 'react-router';
 import { useReactiveVar } from '@apollo/client';
-import { jwtVar } from '../cache';
+import { jwtVar, userVar } from '../cache';
 import { deleteToken } from '../api/index';
+import DropDown from './DropDown';
 
-function Auth(): ReactElement {
+function LoginStatus(): ReactElement {
   const history = useHistory();
   const jwt = useReactiveVar(jwtVar);
+  const user = useReactiveVar(userVar);
+
+  if (!jwt) {
+    return (
+      <div onClick={() => history.push('/auth')}>
+        로그인
+        <i className="fas fa-sign-in-alt" />
+      </div>
+    );
+  }
 
   function logout() {
     const refreshToken = window.localStorage.getItem('refreshToken');
@@ -19,21 +30,22 @@ function Auth(): ReactElement {
     }
     history.push('/auth');
   }
-  if (jwt) {
-    return (
-      <div onClick={logout}>
-        로그아웃
-        <i className="fas fa-sign-out-alt" />
+  return (
+    <DropDown
+      offset={{ left: -75, top: 40 }}
+      header={
+        <div className={styles.userName}>
+          <div>{user?.nickName}</div>
+          <i className="fas fa-chevron-down" />
+        </div>
+      }
+    >
+      <div className={styles.userProfile}>
+        <div>프로필 편집</div>
+        <div onClick={logout}>로그아웃</div>
       </div>
-    );
-  } else {
-    return (
-      <div onClick={() => history.push('/auth')}>
-        로그인
-        <i className="fas fa-sign-in-alt" />
-      </div>
-    );
-  }
+    </DropDown>
+  );
 }
 
 interface Props {
@@ -47,11 +59,11 @@ export default function Header({ content }: Props): ReactElement {
       </div>
       {content}
       <div className={styles.headerOptions}>
-        <div>
+        <div className={styles.searchBar}>
           검색
           <i className="fas fa-search" />
         </div>
-        <Auth />
+        <LoginStatus />
       </div>
     </div>
   );
