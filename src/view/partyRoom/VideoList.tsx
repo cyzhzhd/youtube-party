@@ -3,7 +3,7 @@ import Youtube from 'react-youtube';
 import { useReactiveVar } from '@apollo/client';
 import { useParams } from 'react-router';
 import styles from '../../assets/scss/PartyRoom.module.scss';
-import { videoIdVar, socketQueueVar, videoListVar } from '../../cache';
+import { currentVideoIdVar, socketQueueVar, videoListVar } from '../../cache';
 import AddVideo from './AddVideo';
 import { Video } from '../../types';
 
@@ -11,7 +11,7 @@ export default function VideoList(): ReactElement {
   const videoList = useReactiveVar(videoListVar);
   const queue = useReactiveVar(socketQueueVar);
   const { partyId } = useParams<{ partyId: string }>();
-  useReactiveVar(videoIdVar);
+  useReactiveVar(currentVideoIdVar);
 
   function deleteVideo(videoId: string) {
     socketQueueVar([
@@ -26,7 +26,7 @@ export default function VideoList(): ReactElement {
   }
 
   function watchVideo(videoId: string) {
-    videoIdVar(videoId);
+    currentVideoIdVar(videoId);
     socketQueueVar([
       ...queue,
       {

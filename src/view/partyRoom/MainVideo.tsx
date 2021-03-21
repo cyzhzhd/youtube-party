@@ -4,12 +4,12 @@ import { useReactiveVar } from '@apollo/client';
 import { useParams } from 'react-router';
 import { YouTubePlayer } from 'youtube-player/dist/types';
 import styles from '../../assets/scss/PartyRoom.module.scss';
-import { videoTimeVar, socketQueueVar, isTimeUpToDateVar, videoIdVar } from '../../cache';
+import { currentVideoTimeVar, socketQueueVar, isTimeUpToDateVar, currentVideoIdVar } from '../../cache';
 
 export default function MainVideo(): ReactElement {
   const { partyId } = useParams<{ partyId: string }>();
-  const videoId = useReactiveVar(videoIdVar);
-  const time = useReactiveVar(videoTimeVar);
+  const currentVideoId = useReactiveVar(currentVideoIdVar);
+  const currentTime = useReactiveVar(currentVideoTimeVar);
   const queue = useReactiveVar(socketQueueVar);
   const isUpToDate = useReactiveVar(isTimeUpToDateVar);
 
@@ -18,24 +18,24 @@ export default function MainVideo(): ReactElement {
   useEffect(() => {
     if (!player) return;
 
-    if (Math.abs(time - player.getCurrentTime()) > 2) {
+    if (Math.abs(currentTime - player.getCurrentTime()) > 2) {
       if (isUpToDate) {
-        videoTimeVar(player.getCurrentTime());
+        currentVideoTimeVar(player.getCurrentTime());
         socketQueueVar([
           ...queue,
           {
             type: 'syncVideoTime',
             partyId,
-            videoId,
+            videoId: currentVideoId,
             time: player.getCurrentTime(),
           },
         ]);
       } else {
-        player.seekTo(time, true);
+        player.seekTo(currentTime, true);
         isTimeUpToDateVar(true);
       }
     } else {
-      videoTimeVar(player.getCurrentTime());
+      currentVideoTimeVar(player.getCurrentTime());
     }
   }, [videoTime]);
 
@@ -50,7 +50,7 @@ export default function MainVideo(): ReactElement {
     <div className={styles.mainVideoWrapper}>
       <Youtube
         className={styles.mainVideo}
-        {...{ videoId, onReady }}
+        {...{ currentVideoId, onReady }}
         opts={{
           height: '100%',
           width: '100%',

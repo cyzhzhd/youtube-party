@@ -44,8 +44,8 @@ export const sessionIdVar = makeVar<string>('member');
 export const messagesVar = makeVar<messagesType[]>([]);
 export const socketQueueVar = makeVar<Partial<QueueItem>[]>([]);
 export const videoListVar = makeVar<Video[]>([]);
-export const videoIdVar = makeVar<string>('');
-export const videoTimeVar = makeVar<number>(0);
+export const currentVideoIdVar = makeVar<string>('');
+export const currentVideoTimeVar = makeVar<number>(0);
 export const isTimeUpToDateVar = makeVar<boolean>(true);
 
 export const jwtVar = makeVar<string>('');

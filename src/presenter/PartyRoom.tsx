@@ -8,7 +8,7 @@ import { useQuery, useReactiveVar } from '@apollo/client';
 import { GET_PARTY } from '../queries/party';
 import Loading from '../components/Loading';
 import Error from '../components/Error';
-import { socketQueueVar, videoIdVar, videoListVar } from '../cache';
+import { socketQueueVar, currentVideoIdVar, videoListVar } from '../cache';
 import Header from '../components/Header';
 
 export default function PartyRoom(): ReactElement {
@@ -28,9 +28,9 @@ export default function PartyRoom(): ReactElement {
     variables: { partyId },
   });
 
-  const videoId = useReactiveVar(videoIdVar);
+  const currentVideoId = useReactiveVar(currentVideoIdVar);
   const videoList = useReactiveVar(videoListVar);
-  if (!videoId) videoIdVar(data?.party?.videos[0]?.vid);
+  if (!currentVideoId) currentVideoIdVar(data?.party?.videos[0]?.vid);
   if (!videoList?.length) videoListVar(data?.party?.videos);
 
   if (loading) return <Loading />;
