@@ -6,7 +6,7 @@ import { jwtVar, userVar } from '../../cache';
 import { GET_USER } from '../../queries/user';
 import { UserData } from '../../types';
 
-export default function useInit(): void {
+export default function useInitAuth(): void {
   const jwt = useReactiveVar(jwtVar);
   useEffect(() => {
     if (!jwt) {
