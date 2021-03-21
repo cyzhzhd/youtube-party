@@ -9,7 +9,9 @@ import {
   videoTimeVar,
   isTimeUpToDateVar,
   videoIdVar,
+  userVar,
 } from '../../cache';
+import { generateRandomId } from '../../helper/generateRandomId';
 import { ChatMsg, PartyResponse, VideoInfo } from '../../types';
 
 const url = process.env.REACT_APP_API_HOST as string;
@@ -19,19 +21,28 @@ const socket = io(url, {
 }).connect();
 
 export default function initSocket(): void {
-  const uid = useReactiveVar(sessionIdVar);
   const videoId = useReactiveVar(videoIdVar);
   const queue = useReactiveVar(socketQueueVar);
   const msgs = useReactiveVar(messagesVar);
   const videoList = useReactiveVar(videoListVar);
   const videoTime = useReactiveVar(videoTimeVar);
   const isTimeUpToDate = useReactiveVar(isTimeUpToDateVar);
+  const userData = useReactiveVar(userVar);
 
   /**
    * once user joined the website, get a session Id from server
    */
   useEffect(() => {
     socket.on('sessionId', (data: string) => {
+      console.log('userData', userData);
+      if (userData) {
+        userVar({ ...userData, sessionId: data });
+      } else {
+        userVar({
+          nickName: generateRandomId(),
+          sessionId: data,
+        });
+      }
       sessionIdVar(data);
     });
   }, []);
@@ -67,10 +78,9 @@ export default function initSocket(): void {
    * receiving chat message
    */
   useEffect(() => {
-    console.log('useEffect msgs');
     socket.once('deliverChat', (data: ChatMsg) => {
       console.log(data);
-      messagesVar([...msgs, { uid: data.uid, content: data.content }]);
+      messagesVar([...msgs, { ...data }]);
     });
   }, [msgs]);
 
@@ -88,14 +98,16 @@ export default function initSocket(): void {
         break;
       case 'sendMsg':
         socket.emit('sendMsg', {
-          uid,
+          uid: userData?.uid,
+          nickName: userData?.nickName,
           content: action.content,
           partyId: action.partyId,
         });
         break;
       case 'updateVideoList':
         socket.emit('updateVideoList', {
-          uid,
+          uid: userData?.uid,
+          nickName: userData?.nickName,
           add: action.add,
           partyId: action.partyId,
           videoId: action.videoId,
@@ -103,7 +115,8 @@ export default function initSocket(): void {
         break;
       case 'syncVideoTime':
         socket.emit('syncVideoTime', {
-          uid,
+          uid: userData?.uid,
+          nickName: userData?.nickName,
           partyId: action.partyId,
           videoId: action.videoId,
           time: action.time,
@@ -111,15 +124,14 @@ export default function initSocket(): void {
         break;
       case 'syncVideoId':
         socket.emit('syncVideoId', {
-          uid,
+          uid: userData?.uid,
+          nickName: userData?.nickName,
           partyId: action.partyId,
           videoId: action.videoId,
         });
         break;
-      default:
-        console.log('default', action);
     }
 
     socketQueueVar(queue.slice(1));
-  }, [queue, uid]);
+  }, [queue]);
 }

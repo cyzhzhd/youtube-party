@@ -17,6 +17,7 @@
   @include center();
   width: 150px;
   height: $offset-top;
+  cursor: pointer;
 }
 .navBar {
   display: flex;
@@ -34,10 +35,56 @@
 .headerOptions {
   display: flex;
   align-items: center;
+  cursor: pointer;
+}
+.searchBar {
+  padding: 15px;
+  i {
+    padding-left: 5px;
+    font-size: 0.8rem;
+  }
+  &:hover {
+    color: $color5;
+  }
+}
+.loginIcon {
+  padding: 15px
+}
+.userName{
+  @include center();
+  padding: 15px;
+
+  &:hover {
+    color: $color5;
+  }
   div {
-    padding: 15px;
-    i {
-      padding-left: 10px;
+    font-size: 1.2rem;
+  }
+  i {
+    display: flex;
+    align-items: flex-end;
+    height: 20px;
+    padding-left: 5px;
+    font-size: 0.3rem;
+  }
+}
+.userProfile {
+  @include center();
+  flex-direction: column;
+  border: 1px solid $color4;
+  border-radius: 5px;
+  width: 100px;
+  padding: 5px 15px;
+  font-size: 1rem;
+
+  div {
+    padding: 3px;
+    width: 100%;
+    &:not(:first-child) {
+      border-top: 1px solid $color4;
+    }
+    &:hover {
+      color: $color5;
     }
   }
 }

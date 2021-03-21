@@ -4,7 +4,7 @@ export const partyFragment = {
   party: gql`
     fragment PartyDetail on Party {
       _id
-      uid
+      hostId
       partyName
       currentVideo {
         id
