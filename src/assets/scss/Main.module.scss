@@ -17,6 +17,7 @@
   @include center();
   width: 150px;
   height: $offset-top;
+  cursor: pointer;
 }
 .navBar {
   display: flex;
@@ -46,6 +47,9 @@
     color: $color5;
   }
 }
+.loginIcon {
+  padding: 15px
+}
 .userName{
   @include center();
   padding: 15px;
@@ -70,17 +74,18 @@
   border: 1px solid $color4;
   border-radius: 5px;
   width: 100px;
-  padding: 5px 10px;
-  
+  padding: 5px 15px;
+  font-size: 1rem;
+
   div {
-    font-size: 0.8rem;
     padding: 3px;
     width: 100%;
-    // text-align: right;
     &:not(:first-child) {
       border-top: 1px solid $color4;
     }
-
+    &:hover {
+      color: $color5;
+    }
   }
 }
 .body {

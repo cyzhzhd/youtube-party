@@ -14,7 +14,7 @@ function LoginStatus(): ReactElement {
 
   if (!jwt) {
     return (
-      <div onClick={() => history.push('/auth')}>
+      <div className={styles.loginIcon} onClick={() => history.push('/auth')}>
         로그인
         <i className="fas fa-sign-in-alt" />
       </div>
@@ -32,7 +32,7 @@ function LoginStatus(): ReactElement {
   }
   return (
     <DropDown
-      offset={{ left: -75, top: 40 }}
+      offset={{ left: -80, top: 40 }}
       header={
         <div className={styles.userName}>
           <div>{user?.nickName}</div>
@@ -52,9 +52,10 @@ interface Props {
   content: ReactElement;
 }
 export default function Header({ content }: Props): ReactElement {
+  const history = useHistory();
   return (
     <div className={styles.header}>
-      <div>
+      <div onClick={() => history.push('/')}>
         <img className={styles.headerLogo} alt="logo" src={logo} />
       </div>
       {content}

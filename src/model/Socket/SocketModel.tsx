@@ -21,7 +21,6 @@ const socket = io(url, {
 }).connect();
 
 export default function initSocket(): void {
-  // const uid = useReactiveVar(sessionIdVar);
   const videoId = useReactiveVar(videoIdVar);
   const queue = useReactiveVar(socketQueueVar);
   const msgs = useReactiveVar(messagesVar);
@@ -131,8 +130,6 @@ export default function initSocket(): void {
           videoId: action.videoId,
         });
         break;
-      default:
-        console.log('default', action);
     }
 
     socketQueueVar(queue.slice(1));

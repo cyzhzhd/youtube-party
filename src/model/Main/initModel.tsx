@@ -1,5 +1,6 @@
 import { useLazyQuery, useReactiveVar } from '@apollo/client';
 import { useEffect } from 'react';
+import { useHistory } from 'react-router';
 import { fetchJWT } from '../../api';
 import { jwtVar, userVar } from '../../cache';
 import { GET_USER } from '../../queries/user';
@@ -18,17 +19,26 @@ export default function useInit(): void {
     }
   }, []);
 
-  const [loadUserData, { called, data }] = useLazyQuery<{ user: UserData }>(GET_USER);
+  const userData = useReactiveVar(userVar);
+  const [loadUserData] = useLazyQuery<{ user: UserData }>(GET_USER, {
+    fetchPolicy: 'network-only',
+    onCompleted: data => userVar({ ...userData, ...data?.user }),
+  });
   useEffect(() => {
-    if (jwt && !called) {
+    if (jwt) {
       loadUserData();
     }
   }, [jwt]);
 
-  const userData = useReactiveVar(userVar);
+  const history = useHistory();
   useEffect(() => {
-    if (data) {
-      userVar({ ...userData, ...data?.user });
+    function logout(e: StorageEvent) {
+      if (e.key === 'refreshToken' && e.newValue === null) {
+        jwtVar('');
+        history.push('/auth');
+      }
     }
-  }, [data]);
+    window.addEventListener('storage', logout);
+    return () => window.removeEventListener('storage', logout);
+  }, [jwt]);
 }
