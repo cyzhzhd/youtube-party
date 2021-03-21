@@ -4,14 +4,34 @@ import logo from '../assets/images/logo.png';
 import { useHistory } from 'react-router';
 import { useReactiveVar } from '@apollo/client';
 import { jwtVar, userVar } from '../cache';
-import { deleteToken } from '../api/index';
+import { deleteTokenOnDB } from '../api/index';
 import DropDown from './DropDown';
+
+interface Props {
+  content: ReactElement;
+}
+export default function Header({ content }: Props): ReactElement {
+  const history = useHistory();
+  return (
+    <div className={styles.header}>
+      <div className={styles.headerLogo} onClick={() => history.push('/')}>
+        <img alt="logo" src={logo} />
+      </div>
+      <div className={styles.headerContent}>{content}</div>
+      <div className={styles.headerOptions}>
+        <div className={styles.searchBar}>
+          검색
+          <i className="fas fa-search" />
+        </div>
+        <LoginStatus />
+      </div>
+    </div>
+  );
+}
 
 function LoginStatus(): ReactElement {
   const history = useHistory();
   const jwt = useReactiveVar(jwtVar);
-  const user = useReactiveVar(userVar);
-
   if (!jwt) {
     return (
       <div className={styles.loginIcon} onClick={() => history.push('/auth')}>
@@ -24,12 +44,14 @@ function LoginStatus(): ReactElement {
   function logout() {
     const refreshToken = window.localStorage.getItem('refreshToken');
     if (refreshToken) {
-      deleteToken({ token: refreshToken });
+      deleteTokenOnDB({ token: refreshToken });
       window.localStorage.removeItem('refreshToken');
-      jwtVar('');
     }
+    jwtVar('');
     history.push('/auth');
   }
+
+  const user = useReactiveVar(userVar);
   return (
     <DropDown
       offset={{ left: -80, top: 40 }}
@@ -45,27 +67,5 @@ function LoginStatus(): ReactElement {
         <div onClick={logout}>로그아웃</div>
       </div>
     </DropDown>
-  );
-}
-
-interface Props {
-  content: ReactElement;
-}
-export default function Header({ content }: Props): ReactElement {
-  const history = useHistory();
-  return (
-    <div className={styles.header}>
-      <div onClick={() => history.push('/')}>
-        <img className={styles.headerLogo} alt="logo" src={logo} />
-      </div>
-      {content}
-      <div className={styles.headerOptions}>
-        <div className={styles.searchBar}>
-          검색
-          <i className="fas fa-search" />
-        </div>
-        <LoginStatus />
-      </div>
-    </div>
   );
 }
