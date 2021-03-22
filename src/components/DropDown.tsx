@@ -11,7 +11,7 @@ interface Props {
 function DropDown({ header, children, offset = { top: 0, left: 0 }, selectedVal }: Props): ReactElement {
   const [visible, setVisible] = useState<boolean>(true);
   const wrapperRef = useRef<HTMLDivElement>(null);
-  useClickOutside({ wrapperRef, close: () => setVisible(false) });
+  useClickOutside({ wrapperRef, action: () => setVisible(false) });
 
   useEffect(() => {
     setVisible(!visible);

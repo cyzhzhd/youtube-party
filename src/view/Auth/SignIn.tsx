@@ -10,11 +10,8 @@ interface Props {
   showSignUpPage: () => void;
 }
 export default function SingIn({ showSignUpPage }: Props): ReactElement {
-  const jwt = useReactiveVar(jwtVar);
+  useReactiveVar(jwtVar);
   const history = useHistory();
-  if (jwt) {
-    history.push('/');
-  }
 
   const [errorMsg, setErrorMsg] = useState('');
   const [ID, IDInput, setID] = useInput({ type: 'text' });

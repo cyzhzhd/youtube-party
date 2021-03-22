@@ -6,7 +6,7 @@ import {
   messagesVar,
   videoListVar,
   currentVideoTimeVar,
-  isTimeUpToDateVar,
+  videoTimeReceivedVar,
   currentVideoIdVar,
   userVar,
 } from '../../cache';
@@ -25,7 +25,7 @@ export default function initSocket(): void {
   const msgs = useReactiveVar(messagesVar);
   const videoList = useReactiveVar(videoListVar);
   const currentVideoTime = useReactiveVar(currentVideoTimeVar);
-  const isTimeUpToDate = useReactiveVar(isTimeUpToDateVar);
+  const videoTimeReceived = useReactiveVar(videoTimeReceivedVar);
   const user = useReactiveVar(userVar);
 
   useEffect(() => {
@@ -53,10 +53,10 @@ export default function initSocket(): void {
           currentVideoIdVar(deliveredVideoId);
         }
         currentVideoTimeVar(time);
-        isTimeUpToDateVar(false);
+        videoTimeReceivedVar(true);
       }
     });
-  }, [currentVideoId, isTimeUpToDate, currentVideoTime]);
+  }, [currentVideoId, videoTimeReceived, currentVideoTime]);
 
   useEffect(() => {
     socket.once('deliverVideoId', ({ videoId }: { videoId: string }) => {
@@ -99,6 +99,11 @@ export default function initSocket(): void {
       const action = queue[0];
       switch (action.type) {
         case 'joinPartyRoom':
+          socket.emit(action.type, {
+            partyId: action.partyId,
+          });
+          break;
+        case 'leavePartyRoom':
           socket.emit(action.type, {
             partyId: action.partyId,
           });

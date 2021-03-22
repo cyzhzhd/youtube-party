@@ -2,13 +2,13 @@ import { useEffect } from 'react';
 
 interface Props {
   wrapperRef: React.RefObject<HTMLDivElement>;
-  close: () => void;
+  action: () => void;
 }
-function useClickOutside({ wrapperRef, close }: Props): void {
+function useClickOutside({ wrapperRef, action }: Props): void {
   function handleClickOutside(event: MouseEvent) {
     const { current } = wrapperRef;
     if (current && !current.contains(event.target as Node)) {
-      close();
+      action();
     }
   }
   useEffect(() => {

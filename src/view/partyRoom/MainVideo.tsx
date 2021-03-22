@@ -4,45 +4,50 @@ import { useReactiveVar } from '@apollo/client';
 import { useParams } from 'react-router';
 import { YouTubePlayer } from 'youtube-player/dist/types';
 import styles from '../../assets/scss/PartyRoom.module.scss';
-import { currentVideoTimeVar, socketQueueVar, isTimeUpToDateVar, currentVideoIdVar } from '../../cache';
+import { currentVideoTimeVar, socketQueueVar, videoTimeReceivedVar, currentVideoIdVar } from '../../cache';
 
+const ALLOWED_TIME_GAP = 2;
 export default function MainVideo(): ReactElement {
   const { partyId } = useParams<{ partyId: string }>();
+  const [player, setPlayer] = useState<YouTubePlayer>();
+  const [videoTime, setVideoTime] = useState(0);
+
   const currentVideoId = useReactiveVar(currentVideoIdVar);
   const currentTime = useReactiveVar(currentVideoTimeVar);
   const queue = useReactiveVar(socketQueueVar);
-  const isUpToDate = useReactiveVar(isTimeUpToDateVar);
-
-  const [player, setPlayer] = useState<YouTubePlayer>();
-  const [videoTime, setVideoTime] = useState(0);
+  const videoTimeReceived = useReactiveVar(videoTimeReceivedVar);
   useEffect(() => {
-    if (!player) return;
+    synchrnizeVideoTime();
 
-    if (Math.abs(currentTime - player.getCurrentTime()) > 2) {
-      if (isUpToDate) {
-        currentVideoTimeVar(player.getCurrentTime());
-        socketQueueVar([
-          ...queue,
-          {
-            type: 'syncVideoTime',
-            partyId,
-            videoId: currentVideoId,
-            time: player.getCurrentTime(),
-          },
-        ]);
+    function synchrnizeVideoTime() {
+      if (!player) return;
+
+      if (Math.abs(currentTime - player.getCurrentTime()) > ALLOWED_TIME_GAP) {
+        if (videoTimeReceived) {
+          player.seekTo(currentTime, true);
+          videoTimeReceivedVar(true);
+        } else {
+          currentVideoTimeVar(player.getCurrentTime());
+          socketQueueVar([
+            ...queue,
+            {
+              type: 'syncVideoTime',
+              partyId,
+              videoId: currentVideoId,
+              time: player.getCurrentTime(),
+            },
+          ]);
+        }
       } else {
-        player.seekTo(currentTime, true);
-        isTimeUpToDateVar(true);
+        currentVideoTimeVar(player.getCurrentTime());
       }
-    } else {
-      currentVideoTimeVar(player.getCurrentTime());
     }
   }, [videoTime]);
 
-  function onReady(event: { target: YouTubePlayer }) {
-    setPlayer(event.target);
+  function onYoutubePlayerReady({ target }: { target: YouTubePlayer }) {
+    setPlayer(target);
     setInterval(() => {
-      setVideoTime(event.target.getCurrentTime());
+      setVideoTime(target.getCurrentTime());
     }, 1000);
   }
 
@@ -50,7 +55,8 @@ export default function MainVideo(): ReactElement {
     <div className={styles.mainVideoWrapper}>
       <Youtube
         className={styles.mainVideo}
-        {...{ currentVideoId, onReady }}
+        videoId={currentVideoId}
+        onReady={onYoutubePlayerReady}
         opts={{
           height: '100%',
           width: '100%',

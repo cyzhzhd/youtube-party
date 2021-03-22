@@ -17,15 +17,7 @@ export default function AddVideo({ backToList }: Props): ReactElement {
   const videoId = urlParser(url);
 
   function addVideoOnList() {
-    socketQueueVar([
-      ...queue,
-      {
-        type: 'updateVideoList',
-        add: true,
-        videoId,
-        partyId,
-      },
-    ]);
+    socketQueueVar([...queue, { type: 'updateVideoList', add: true, videoId, partyId }]);
     setUrl('');
     backToList();
   }

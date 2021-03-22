@@ -3,25 +3,33 @@ import { useReactiveVar } from '@apollo/client';
 import { useParams } from 'react-router';
 import styles from '../../assets/scss/PartyRoom.module.scss';
 import useInput from '../../hooks/useInput';
-import { messagesVar, sessionIdVar, socketQueueVar } from '../../cache';
+import { messagesVar, socketQueueVar } from '../../cache';
+
+export default function Chat(): ReactElement {
+  const [isChatMode, setIsChatMode] = useState(true);
+  return (
+    <div className={styles.chat}>
+      <div className={styles.chatHeader}>
+        <div className={isChatMode ? styles.selectedMode : ''} onClick={() => setIsChatMode(true)}>
+          채팅목록
+        </div>
+        <div className={!isChatMode ? styles.selectedMode : ''} onClick={() => setIsChatMode(false)}>
+          유저목록
+        </div>
+      </div>
+      {isChatMode ? <ChatList /> : <UserList />}
+    </div>
+  );
+}
 
 function ChatList() {
   const { partyId } = useParams<{ partyId: string }>();
   const queue = useReactiveVar(socketQueueVar);
-  const uid = useReactiveVar(sessionIdVar);
   const msgs = useReactiveVar(messagesVar);
   const [userMsg, userMsgInput, setUserMsg] = useInput({ type: 'text' });
 
   function sendMessage() {
-    socketQueueVar([
-      ...queue,
-      {
-        type: 'sendMsg',
-        uid,
-        content: userMsg,
-        partyId,
-      },
-    ]);
+    socketQueueVar([...queue, { type: 'sendMsg', content: userMsg, partyId }]);
     setUserMsg('');
   }
 
@@ -46,21 +54,4 @@ function ChatList() {
 }
 function UserList(): ReactElement {
   return <p>userlist</p>;
-}
-
-export default function Chat(): ReactElement {
-  const [isChatMode, setIsChatMode] = useState(true);
-  return (
-    <div className={styles.chat}>
-      <div className={styles.chatHeader}>
-        <div className={isChatMode ? styles.selectedMode : ''} onClick={() => setIsChatMode(true)}>
-          채팅목록
-        </div>
-        <div className={!isChatMode ? styles.selectedMode : ''} onClick={() => setIsChatMode(false)}>
-          유저목록
-        </div>
-      </div>
-      {isChatMode ? <ChatList /> : <UserList />}
-    </div>
-  );
 }
