@@ -6,7 +6,7 @@ interface input {
 
 export default function useInput({ type }: input): [string, ReactElement, Dispatch<SetStateAction<string>>] {
   const [value, setValue] = useState<string>('');
-  const input = <input value={value} onChange={e => setValue(e.target.value)} type={type} />;
+  const input = <input {...{ value, type }} onChange={e => setValue(e.target.value)} />;
 
   return [value, input, setValue];
 }

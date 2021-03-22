@@ -27,6 +27,17 @@ $offset-top: 60px;
   width: 100vw;
 }
 
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: auto;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  font-size: 100px;
+  color: $color3;
+}
+
 ul {
   list-style-type: none;
 }
@@ -39,6 +50,8 @@ body {
   width: 100vw;
   height: 100vh;
   overflow-x: hidden;
+  text-align: center;
+  background-color: $color1;
 }
 
 html,

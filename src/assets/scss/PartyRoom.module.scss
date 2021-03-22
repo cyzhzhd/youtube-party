@@ -4,13 +4,10 @@
   grid-template-columns: 1fr 300px;
   grid-template-areas: 
   'mainVideoWrapper banner';
-  // width: 100%;
-  // min-height: 100%;
   width: 100vw;
   height: 100vh;
   max-height: 100vh;
   background-color: $color1;
-  // overflow-y: hidden;
 }
 .mainVideoWrapper {
   @include center();
@@ -102,7 +99,7 @@
 
 .partyDetail {
   @include center();
-  flex: 1;
+  height: 100%;
   margin-left: 30px;
   div {
     padding: 0 10px;

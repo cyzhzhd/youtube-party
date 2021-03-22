@@ -20,6 +20,7 @@ export default function PartyList({ createParty }: Props): ReactElement {
   });
 
   const observerRef = useRef<HTMLDivElement | null>(null);
+  useIntersectionObserver({ observerRef, action: fetchMoreOnIntersect });
   function fetchMoreOnIntersect() {
     if (data?.parties.hasMore) {
       fetchMore({
@@ -27,7 +28,6 @@ export default function PartyList({ createParty }: Props): ReactElement {
       });
     }
   }
-  useIntersectionObserver({ observerRef, action: fetchMoreOnIntersect });
 
   if (error) return <Error />;
   if (loading) return <Loading />;
@@ -35,10 +35,10 @@ export default function PartyList({ createParty }: Props): ReactElement {
     <ul className={styles.partyListWrapper}>
       <li className={styles.partyList}>
         <CeatePartyBox {...{ createParty }} />
-        {data?.parties.parties.map((party: PartyListResponse) => (
-          <div key={party._id} className={styles.party}>
-            <Link to={`/partyRoom/${party._id}`}>
-              <div className={styles.partyName}>{party.partyName}</div>
+        {data?.parties.parties.map(({ _id, partyName, hostId, numUsers, bookmarked }: PartyListResponse) => (
+          <div key={_id} className={styles.party}>
+            <Link to={`/partyRoom/${_id}`}>
+              <div className={styles.partyName}>{partyName}</div>
               <div>
                 <img className={styles.thumbnail} alt="coverImage" src={coverImage} />
               </div>
@@ -46,15 +46,15 @@ export default function PartyList({ createParty }: Props): ReactElement {
                 <div className={styles.partyDetail}>
                   <div className={styles.hostID}>
                     <i className="fas fa-user" />
-                    {party.uid}
+                    {hostId}
                   </div>
                   <div>
                     <i className="fas fa-users" />
-                    {party.numUsers}명
+                    {numUsers}명
                   </div>
                   <div>
                     <i className="fas fa-star" />
-                    {party.bookmarked}명
+                    {bookmarked}명
                   </div>
                 </div>
               </div>

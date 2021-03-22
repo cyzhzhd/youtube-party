@@ -3,50 +3,7 @@ import { useReactiveVar } from '@apollo/client';
 import { useParams } from 'react-router';
 import styles from '../../assets/scss/PartyRoom.module.scss';
 import useInput from '../../hooks/useInput';
-import { messagesVar, sessionIdVar, socketQueueVar } from '../../cache';
-
-function ChatList() {
-  const { partyId } = useParams<{ partyId: string }>();
-  const queue = useReactiveVar(socketQueueVar);
-  const uid = useReactiveVar(sessionIdVar);
-  const msgs = useReactiveVar(messagesVar);
-  const [userMsg, userMsgInput, setUserMsg] = useInput({ type: 'text' });
-
-  function sendMessage() {
-    socketQueueVar([
-      ...queue,
-      {
-        type: 'sendMsg',
-        uid,
-        content: userMsg,
-        partyId,
-      },
-    ]);
-    setUserMsg('');
-  }
-
-  return (
-    <div className={styles.chatList}>
-      <ul className={styles.chatMessages}>
-        {msgs.map((val, idx) => (
-          <li key={idx}>
-            <div className={styles.messageWrapper}>
-              <p>{val.uid}</p>
-              <p>{val.content}</p>
-            </div>
-          </li>
-        ))}
-      </ul>
-      <div className={styles.chatInputWrapper}>
-        {userMsgInput}
-        <button onClick={sendMessage}>send</button>
-      </div>
-    </div>
-  );
-}
-function UserList(): ReactElement {
-  return <p>userlist</p>;
-}
+import { messagesVar, socketQueueVar } from '../../cache';
 
 export default function Chat(): ReactElement {
   const [isChatMode, setIsChatMode] = useState(true);
@@ -63,4 +20,38 @@ export default function Chat(): ReactElement {
       {isChatMode ? <ChatList /> : <UserList />}
     </div>
   );
+}
+
+function ChatList() {
+  const { partyId } = useParams<{ partyId: string }>();
+  const queue = useReactiveVar(socketQueueVar);
+  const msgs = useReactiveVar(messagesVar);
+  const [userMsg, userMsgInput, setUserMsg] = useInput({ type: 'text' });
+
+  function sendMessage() {
+    socketQueueVar([...queue, { type: 'sendMsg', content: userMsg, partyId }]);
+    setUserMsg('');
+  }
+
+  return (
+    <div className={styles.chatList}>
+      <ul className={styles.chatMessages}>
+        {msgs.map((val, idx) => (
+          <li key={idx}>
+            <div className={styles.messageWrapper}>
+              <p>{val.nickName}</p>
+              <p>{val.content}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <div className={styles.chatInputWrapper}>
+        {userMsgInput}
+        <button onClick={sendMessage}>send</button>
+      </div>
+    </div>
+  );
+}
+function UserList(): ReactElement {
+  return <p>userlist</p>;
 }

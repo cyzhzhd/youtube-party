@@ -1,6 +1,6 @@
 import { InMemoryCache, makeVar } from '@apollo/client';
 import { deepCopy } from './helper/deepCopy';
-import { messagesType, QueueItem, Video } from './types';
+import { messagesType, QueueItem, UserData, Video } from './types';
 
 const cache = new InMemoryCache({
   typePolicies: {
@@ -39,13 +39,15 @@ const cache = new InMemoryCache({
     },
   },
 });
-export const uidVar = makeVar<string>('ekwon');
-export const sessionIdVar = makeVar<string>('member');
+
 export const messagesVar = makeVar<messagesType[]>([]);
 export const socketQueueVar = makeVar<Partial<QueueItem>[]>([]);
 export const videoListVar = makeVar<Video[]>([]);
-export const videoIdVar = makeVar<string>('');
-export const videoTimeVar = makeVar<number>(0);
-export const isTimeUpToDateVar = makeVar<boolean>(true);
+export const currentVideoIdVar = makeVar<string>('');
+export const currentVideoTimeVar = makeVar<number>(0);
+export const videoTimeReceivedVar = makeVar<boolean>(true);
+
+export const jwtVar = makeVar<string>('');
+export const userVar = makeVar<UserData | undefined>(undefined);
 
 export default cache;
