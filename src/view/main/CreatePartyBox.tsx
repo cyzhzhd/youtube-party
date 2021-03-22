@@ -8,14 +8,14 @@ interface Props {
 export default function CreatePartyBox({ createParty }: Props): ReactElement {
   const [partyName, partyNameInput, setPartyName] = useInput({ type: 'text' });
 
-  async function onClickHandler() {
+  async function createPartyHandler() {
     createParty(partyName);
     setPartyName('');
   }
   return (
     <div className={[styles.party, styles.createPartyBox].join(' ')}>
       <div>
-        <i className="fas fa-plus fa-4x" onClick={onClickHandler} />
+        <i className="fas fa-plus fa-4x" onClick={createPartyHandler} />
       </div>
       <div>방 이름을 입력해주세요.</div>
       <div>{partyNameInput}</div>

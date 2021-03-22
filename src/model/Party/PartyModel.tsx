@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import { useHistory } from 'react-router';
-import { sessionIdVar } from '../../cache';
+import { userVar } from '../../cache';
 import { CREATE_PARTY } from '../../queries/party';
 
 type ReturnType = {
@@ -18,7 +18,7 @@ export default function useParty(): ReturnType {
   function createParty(partyName: string) {
     createPartyMutation({
       variables: {
-        uid: sessionIdVar(),
+        uid: userVar()?.nickName,
         partyName,
       },
     });
