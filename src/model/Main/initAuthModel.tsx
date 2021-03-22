@@ -9,12 +9,16 @@ import { UserData } from '../../types';
 export default function useInitAuth(): void {
   const jwt = useReactiveVar(jwtVar);
   useEffect(() => {
-    if (!jwt) {
-      const refreshToken = window.localStorage.getItem('refreshToken');
-      if (refreshToken) {
-        fetchJWT({ token: refreshToken })
-          .then(jwt => jwtVar(jwt.accessToken))
-          .catch(error => console.log(error));
+    setJWTUsingRefreshToken();
+
+    function setJWTUsingRefreshToken() {
+      if (!jwt) {
+        const refreshToken = window.localStorage.getItem('refreshToken');
+        if (refreshToken) {
+          fetchJWT({ token: refreshToken })
+            .then(jwt => jwtVar(jwt.accessToken))
+            .catch(error => console.log(error));
+        }
       }
     }
   }, []);
@@ -32,13 +36,14 @@ export default function useInitAuth(): void {
 
   const history = useHistory();
   useEffect(() => {
+    window.addEventListener('storage', logout);
+    return () => window.removeEventListener('storage', logout);
+
     function logout(e: StorageEvent) {
       if (e.key === 'refreshToken' && e.newValue === null) {
         jwtVar('');
         history.push('/auth');
       }
     }
-    window.addEventListener('storage', logout);
-    return () => window.removeEventListener('storage', logout);
   }, [jwt]);
 }

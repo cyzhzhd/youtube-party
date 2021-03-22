@@ -7,9 +7,9 @@ import { useHistory } from 'react-router';
 import { fetchTokens } from '../../api';
 
 interface Props {
-  signUpMode: () => void;
+  showSignUpPage: () => void;
 }
-export default function SingIn({ signUpMode }: Props): ReactElement {
+export default function SingIn({ showSignUpPage }: Props): ReactElement {
   const jwt = useReactiveVar(jwtVar);
   const history = useHistory();
   if (jwt) {
@@ -55,7 +55,7 @@ export default function SingIn({ signUpMode }: Props): ReactElement {
       </div>
       <div className={styles.optionWrapper}>
         <div>아이디 혹은 비밀번호를 잊었습니까?</div>
-        <div onClick={signUpMode}>계정 만들기</div>
+        <div onClick={showSignUpPage}>계정 만들기</div>
       </div>
       {errorMsg && <div className={styles.errorMsg}>{errorMsg}</div>}
       <div className={styles.signBtn}>

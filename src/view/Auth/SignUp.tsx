@@ -3,10 +3,10 @@ import styles from '../../assets/scss/Auth.module.scss';
 import useInput from '../../hooks/useInput';
 
 interface Props {
-  signInMode: () => void;
+  showSignInPage: () => void;
   signUpUser: (id: string, password: string, nickName: string) => void;
 }
-export default function SignUp({ signInMode, signUpUser }: Props): ReactElement {
+export default function SignUp({ showSignInPage, signUpUser }: Props): ReactElement {
   const [ID, IDInput, setID] = useInput({ type: 'text' });
   const [PW, PWInput, setPW] = useInput({ type: 'password' });
   const [confirmPW, confirmPWInput, setConfirmPW] = useInput({ type: 'password' });
@@ -60,7 +60,7 @@ export default function SignUp({ signInMode, signUpUser }: Props): ReactElement 
         </div>
       </div>
       <div className={styles.optionWrapper}>
-        <div onClick={signInMode}>이미 아이디가 있으십니까?</div>
+        <div onClick={showSignInPage}>이미 아이디가 있으십니까?</div>
       </div>
       {errorMsg && <div className={styles.errorMsg}>{errorMsg}</div>}
       <div className={styles.signBtn}>
