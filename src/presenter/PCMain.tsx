@@ -1,12 +1,12 @@
 import { ReactElement } from 'react';
 import styles from '../assets/scss/Main.module.scss';
 import useParty from '../model/Party/PartyModel';
-import FrindList from '../view/main/FriendList';
+import FrindList from '../view/friendList/FriendList';
 import Header from '../components/Header';
-import PartyList from '../view/main/PartyList';
+import PartyList from '../view/partylist/PartyList';
 
 const NAVBAR_ITEMS = ['트렌딩', '즐겨찾기', '나의 파티룸', '친구의 파티룸'];
-function Main(): ReactElement {
+export default function PCMain(): ReactElement {
   const {
     operations: { createParty },
   } = useParty();
@@ -33,5 +33,3 @@ function Main(): ReactElement {
     </div>
   );
 }
-
-export default Main;

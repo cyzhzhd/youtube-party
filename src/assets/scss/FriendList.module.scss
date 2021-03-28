@@ -1,7 +1,18 @@
 @import './App.module.scss';
-.friendList {
+.friendListWrapper {
   color: $color4;
   font-weight: 700;
   margin: 15px;
   text-align: left;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+
+  i {
+    cursor: pointer;
+    &:hover {
+      color: $color5;
+    }
+  }
 }

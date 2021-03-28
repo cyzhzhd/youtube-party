@@ -17,7 +17,7 @@ export default function useInitAuth(): void {
         if (refreshToken) {
           fetchJWT({ token: refreshToken })
             .then(jwt => jwtVar(jwt.accessToken))
-            .catch(error => console.log(error));
+            .catch(error => console.error(error));
         }
       }
     }

@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import styles from './assets/scss/App.module.scss';
-import Main from './presenter/Main';
+import PCMain from './presenter/PCMain';
 import PartyRoom from './presenter/PartyRoom';
 import SocketIO from './model/Socket/SocketModel';
 import Auth from './presenter/Auth';
@@ -21,7 +21,7 @@ function App(): ReactElement {
           <PartyRoom />
         </Route>
         <Route exact path="/">
-          <Main />
+          <PCMain />
         </Route>
       </Switch>
     </div>
