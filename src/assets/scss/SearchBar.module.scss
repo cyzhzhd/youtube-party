@@ -1,0 +1,133 @@
+@import './App.module.scss';
+.activatedSearchWrapper {
+  display: block;
+  width: 100%;
+  border: 2px solid $color5;
+  border-radius: 5px;
+  box-shadow: 3px 3px 2px 0 gainsboro;
+  background-color: white;
+  @include transition(width);
+}
+.searchWrapper {
+  width: 50px;
+  @include center();
+  @include transition(width);
+}
+.searchBox {
+  @include center();
+  cursor: pointer;
+
+  i {
+    @include center();
+  }
+}
+.searchIcon {
+  padding: 10px;
+  color: $color4;
+}
+.xIcon {
+  color: rgba(0, 0, 0, 0.596);
+  border-left: 1px solid gainsboro;
+  height: 30px;
+  padding: 0 10px;
+}
+.inputSearch {
+  display: block;
+  width: 100%;
+  font-size: 16px;
+  height: 40px;
+  letter-spacing: -.2px;
+  position: relative;
+  color: #000;
+  font-weight: 700;
+  outline: none;
+  border: none;
+}
+.searchSuggest {
+  background-color: white;
+  min-height: 5rem;
+  max-height: 15rem;
+  padding: 10px;
+  border: 2px solid $color5;
+  border-radius: 5px;
+  box-shadow: 3px 3px 3px 0 gray;
+  overflow: auto;
+  font-size: 0.8rem;
+  @include thin-scrollbar();
+}
+.suggestStoreWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  height: 25px;
+  font-size: 0.9rem;
+  &:hover {
+    background-color: gainsboro;
+  }
+  &:hover> .suggestStoreDelete {
+    display: block;
+  }
+}
+.suggestStoreNameWrapper {
+  display: flex;
+  width: 100%;
+  text-align: left;
+  div {
+    padding-right: 10px;
+  }
+}
+.suggestHistoryWrapper {
+  display: flex;
+  width: 100%;
+  max-width: 95%;
+  text-align: left;
+  div {
+    padding-right: 10px;
+  }
+}
+
+.suggestStoreName{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.searchedDay {
+  color: gray;
+  font-size: 0.8rem;
+  flex: 1 0 auto;
+  text-align: right;
+}
+.suggestStoreCategory {
+  color: gray;
+  flex: 1 0 auto;
+}
+.suggestStoreDelete {
+  display: none;
+  outline: none;
+  border: none;
+  border-radius: 10rem;
+  padding: 4px 6px;
+  background-color: white;
+  cursor: pointer;
+}
+@media only screen and (max-width: 375px) {
+  .activatedSearchWrapper {
+    display: block;
+    width: 100%;
+    @include transition(width);
+  }
+  .suggestStoreWrapper {
+    font-size: 0.8rem;
+  }
+  .suggestStoreDelete {
+    display: block;
+  }
+
+  .suggestStoreNameWrapper {
+    width: 80%;
+  }
+  .suggestHistoryWrapper {
+    width: 90%;
+  }
+}
