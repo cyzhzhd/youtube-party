@@ -2,7 +2,7 @@
 .friendListWrapper {
   color: $color4;
   font-weight: 700;
-  margin: 15px;
+  margin: 10px;
   text-align: left;
 }
 .header {
@@ -15,4 +15,19 @@
       color: $color5;
     }
   }
+}
+
+.headerTitle {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  height: 46px;
+}
+
+.headerSearchIcon {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  width: 100%;
+  height: 46px;
 }

@@ -67,3 +67,14 @@ export interface FriendList {
   status: string;
   partyName: string;
 }
+
+export interface UserSuggest {
+  uid: string;
+  nickName: string;
+}
+
+export interface localStorageData {
+  updateTime: Date;
+  id: string;
+  type: string;
+}
