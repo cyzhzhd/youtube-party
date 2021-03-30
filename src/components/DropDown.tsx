@@ -8,7 +8,7 @@ interface Props {
   offset?: { top: number; left: number };
   selectedVal?: string | number;
 }
-function DropDown({ header, children, offset = { top: 0, left: 0 }, selectedVal }: Props): ReactElement {
+function DropDown({ header, children, offset, selectedVal }: Props): ReactElement {
   const [visible, setVisible] = useState<boolean>(true);
   const wrapperRef = useRef<HTMLDivElement>(null);
   useClickOutside({ wrapperRef, action: () => setVisible(false) });
@@ -23,7 +23,7 @@ function DropDown({ header, children, offset = { top: 0, left: 0 }, selectedVal 
         {header}
       </div>
       {visible && (
-        <div className={styles.dropDown} style={{ left: `${offset.left}px`, top: `${offset.top}px` }}>
+        <div className={styles.dropDown} style={{ left: `${offset?.left}px`, top: `${offset?.top}px` }}>
           {children}
         </div>
       )}

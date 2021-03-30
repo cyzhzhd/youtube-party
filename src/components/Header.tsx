@@ -32,6 +32,7 @@ export default function Header({ content }: Props): ReactElement {
 function LoginStatus(): ReactElement {
   const history = useHistory();
   const jwt = useReactiveVar(jwtVar);
+  const user = useReactiveVar(userVar);
   if (!jwt) {
     return (
       <div className={styles.loginIcon} onClick={() => history.push('/auth')}>
@@ -51,7 +52,6 @@ function LoginStatus(): ReactElement {
     history.push('/auth');
   }
 
-  const user = useReactiveVar(userVar);
   return (
     <DropDown
       offset={{ left: -80, top: 40 }}
