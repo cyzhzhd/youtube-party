@@ -1,9 +1,11 @@
-import { useMutation } from '@apollo/client';
-import { SIGN_UP_USER } from '../../queries/user';
+import { useMutation, useReactiveVar } from '@apollo/client';
+import { userUpdatedVar } from '../../cache';
+import { SEND_FRIEND_REQUEST, SIGN_UP_USER } from '../../queries/user';
 
 type ReturnType = {
   operations: {
     signUpUser: (id: string, password: string, nickName: string) => void;
+    sendFriendRequest: (uid: string) => void;
   };
 };
 export default function useUser(): ReturnType {
@@ -13,7 +15,17 @@ export default function useUser(): ReturnType {
       variables: { id, password, nickName },
     });
   }
+
+  useReactiveVar(userUpdatedVar);
+  const [sendFriendRequestMutation] = useMutation(SEND_FRIEND_REQUEST);
+  function sendFriendRequest(id: string) {
+    sendFriendRequestMutation({
+      variables: { uid: id },
+    });
+    userUpdatedVar(true);
+  }
+
   return {
-    operations: { signUpUser },
+    operations: { signUpUser, sendFriendRequest },
   };
 }

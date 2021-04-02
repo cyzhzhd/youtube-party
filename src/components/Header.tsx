@@ -6,6 +6,7 @@ import { useReactiveVar } from '@apollo/client';
 import { jwtVar, userVar } from '../cache';
 import { deleteTokenOnDB } from '../api/index';
 import DropDown from './DropDown';
+import { notificationType, NotificationHistory } from '../types';
 
 interface Props {
   content: ReactElement;
@@ -23,6 +24,7 @@ export default function Header({ content }: Props): ReactElement {
           검색
           <i className="fas fa-search" />
         </div>
+        <Notifications />
         <LoginStatus />
       </div>
     </div>
@@ -67,5 +69,29 @@ function LoginStatus(): ReactElement {
         <div onClick={logout}>로그아웃</div>
       </div>
     </DropDown>
+  );
+}
+
+function Notifications(): ReactElement {
+  const user = useReactiveVar(userVar);
+  console.log(user);
+  return (
+    <DropDown header={<i className="far fa-bell" />}>
+      <>
+        {user?.notificationHistory?.map(notification => (
+          <div key={notification._id}>
+            <Notification {...{ notification }} />
+          </div>
+        ))}
+      </>
+    </DropDown>
+  );
+}
+
+function Notification({ notification }: { notification: NotificationHistory }): ReactElement {
+  return (
+    <div>
+      <div>{notification.type}</div>
+    </div>
   );
 }

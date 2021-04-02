@@ -49,5 +49,6 @@ export const videoTimeReceivedVar = makeVar<boolean>(true);
 
 export const jwtVar = makeVar<string>('');
 export const userVar = makeVar<UserData | undefined>(undefined);
+export const userUpdatedVar = makeVar<boolean>(true);
 
 export default cache;

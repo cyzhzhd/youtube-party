@@ -2,7 +2,7 @@ import { useLazyQuery, useReactiveVar } from '@apollo/client';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { fetchJWT } from '../../api';
-import { jwtVar, userVar } from '../../cache';
+import { jwtVar, userUpdatedVar, userVar } from '../../cache';
 import { GET_USER } from '../../queries/user';
 import { UserData } from '../../types';
 
@@ -28,11 +28,14 @@ export default function useInitAuth(): void {
     fetchPolicy: 'network-only',
     onCompleted: data => userVar({ ...userData, ...data?.user }),
   });
+
+  const userUpdated = useReactiveVar(userUpdatedVar);
   useEffect(() => {
-    if (jwt) {
+    if (jwt && userUpdated) {
       loadUserData();
+      userUpdatedVar(false);
     }
-  }, [jwt]);
+  }, [jwt, userUpdated]);
 
   const history = useHistory();
   useEffect(() => {

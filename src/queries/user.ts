@@ -21,6 +21,15 @@ export const userFragment = {
         status
         partyName
       }
+      notificationHistory {
+        _id
+        type
+        from
+        to
+        content
+        time
+        checked
+      }
       joinedTime
     }
   `,
@@ -46,4 +55,13 @@ export const SIGN_UP_USER = gql`
     }
   }
   ${userFragment.user}
+`;
+
+export const SEND_FRIEND_REQUEST = gql`
+  mutation SendFreindRequest($uid: String!) {
+    sendFriendRequest(uid: $uid) {
+      success
+      message
+    }
+  }
 `;

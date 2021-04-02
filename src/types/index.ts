@@ -55,9 +55,10 @@ export interface UserData {
   sessionId?: string;
   status?: string;
   nickName?: string;
-  joinedTime?: number;
   friendList?: FriendList[];
   bookmarkedParties?: PartyListResponse[];
+  notificationHistory?: NotificationHistory[];
+  joinedTime?: number;
 }
 
 export interface FriendList {
@@ -68,13 +69,26 @@ export interface FriendList {
   partyName: string;
 }
 
-export interface UserSuggest {
-  uid: string;
-  nickName: string;
+export interface Suggest {
+  id: string;
+  name: string;
 }
 
 export interface localStorageData {
   updateTime: Date;
   id: string;
   type: string;
+}
+export interface NotificationHistory {
+  _id?: string;
+  type: string;
+  from: string;
+  to: string;
+  content?: string;
+  time: Date;
+  checked: boolean;
+}
+
+export enum notificationType {
+  FRIEND_REQUEST = 'friendRequest',
 }
