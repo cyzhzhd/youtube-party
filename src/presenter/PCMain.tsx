@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import styles from '../assets/scss/Main.module.scss';
 import useParty from '../model/Party/PartyModel';
-import FrindList from '../view/friendList/FriendList';
+import FrindList from './FriendList';
 import Header from '../components/Header';
 import PartyList from '../view/partylist/PartyList';
 
