@@ -18,14 +18,14 @@ export default function SearchHistory({
     const loadedSearchHistory = loadItemFromLocalStorage<localStorageData>(SEARCH_HISTORY);
     const deletingHistoryIndex = loadedSearchHistory.findIndex(history => history.id === name);
     loadedSearchHistory.splice(deletingHistoryIndex, 1);
-    localStorage.setItem('B_SearchHistoryList', JSON.stringify(loadedSearchHistory));
+    localStorage.setItem(SEARCH_HISTORY, JSON.stringify(loadedSearchHistory));
     setSearchHistory(loadedSearchHistory);
   }
   return (
     <>
       {searchHistory.map(({ updateTime, id, type }: localStorageData) => {
         const day = new Date(updateTime);
-        const month = day.getMonth();
+        const month = day.getMonth() + 1;
         const date = day.getDate();
         return (
           <div key={updateTime.toString()} className={styles.suggestStoreWrapper}>

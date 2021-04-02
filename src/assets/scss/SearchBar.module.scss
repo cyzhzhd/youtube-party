@@ -45,7 +45,7 @@
 }
 .searchSuggest {
   background-color: white;
-  min-height: 5rem;
+  min-height: 1rem;
   max-height: 15rem;
   padding: 10px;
   border: 2px solid $color5;
@@ -68,6 +68,10 @@
   &:hover> .suggestStoreDelete {
     display: block;
   }
+}
+
+.friendRequest {
+  color: $color5;
 }
 .suggestStoreNameWrapper {
   display: flex;

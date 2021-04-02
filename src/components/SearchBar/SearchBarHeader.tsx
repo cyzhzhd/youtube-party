@@ -6,28 +6,17 @@ interface Props {
   setIsActivated: React.Dispatch<React.SetStateAction<boolean>>;
   userInput: string;
   setUserInput: React.Dispatch<React.SetStateAction<string>>;
-  storeSearchHistory(name?: string): void;
 }
-export default function SearchBarHeader({
-  isActivated,
-  setIsActivated,
-  userInput,
-  setUserInput,
-  storeSearchHistory,
-}: Props): ReactElement {
-  function openSearchBarOrSearch() {
-    userInput ? storeSearchHistory() : setIsActivated(true);
-  }
+export default function SearchBarHeader({ isActivated, setIsActivated, userInput, setUserInput }: Props): ReactElement {
   return (
     <div className={styles.searchBox}>
-      <i className={['fas fa-search', styles.searchIcon].join(' ')} onClick={openSearchBarOrSearch} />
+      <i className={['fas fa-search', styles.searchIcon].join(' ')} onClick={() => setIsActivated(true)} />
       {isActivated && (
         <>
           <input
             className={styles.inputSearch}
             value={userInput}
             onChange={e => setUserInput(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && storeSearchHistory()}
             type="text"
             autoComplete="off"
             autoFocus

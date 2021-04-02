@@ -4,14 +4,17 @@ import styles from '../../assets/scss/FriendList.module.scss';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import { SEARCH_USER } from '../../queries/search';
 
-export default function FriendListHeader(): ReactElement {
+interface Props {
+  action: (id: string) => void;
+}
+export default function FriendListHeader({ action }: Props): ReactElement {
   const [searchUser, { data }] = useLazyQuery(SEARCH_USER);
 
   return (
     <div className={styles.header}>
       <div className={styles.headerTitle}>친구 목록</div>
       <div className={styles.headerSearchIcon}>
-        <SearchBar suggests={data?.searchedUser} fetchSuggestion={searchUser} width={280} />
+        <SearchBar suggests={data?.searchedUser} fetchSuggestion={searchUser} width={280} action={action} />
       </div>
     </div>
   );
